@@ -1,0 +1,111 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+:root{
+    --azul-principal: #46697F;
+    --azul-fundo: #4f758f40;
+
+}
+
+body {
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px;
+    background-color: var(--azul-fundo);
+
+}
+
+#texto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 40px 0px;
+
+}
+
+h1 {
+    text-align: center;
+    color: var(--azul-principal);
+    font-weight: bold;
+}
+
+#barra {
+    width: 600px;
+    background-color: var(--azul-principal);
+    height: 4px;
+}
+
+
+main {
+    max-width: 300px;
+    margin: auto;
+    background-color: var(--azul-principal);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#box-usuario,
+#box-senha {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-weight: bolder;
+}
+
+#box-senha {
+    display: flex;
+    flex: 1;
+}
+
+input {
+    max-width: 100%;
+    margin: 4px 0px 10px 0px;
+    padding: 4px;
+    outline: none;
+    transition-duration: 0.15s;
+}
+
+input:hover {
+    outline: 1px solid rgba(0, 0, 0, 0.308);
+}
+
+#box-opcoes{
+    margin: 4px 0px 10px 0px;
+    color: white;
+    font-weight: bold;
+
+    & #opcoes{
+        outline: none;
+    }
+}
+
+form {
+    min-height: 150px;
+}
+
+button {
+    cursor: pointer;
+    background-color: #3ddaf9;
+    padding: 4px;
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    font-weight: bolder;
+    transition-duration: 0.15s;
+}
+
+button:hover {
+    background-color: #478b98;
+    color: white;
+}
+

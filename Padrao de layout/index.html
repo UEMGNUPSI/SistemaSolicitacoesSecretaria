@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Estilos/estiloLogin.css">
+    <link rel="shortcut icon" href="assets/icone logo.ico" type="image/x-icon">
+    <title>SOLICITAÇÕES UEMG-FRUTAL</title>
+</head>
+
+<body>
+    <div id="texto">
+        <h1>SOLICITAÇÕES UEMG-FRUTAL</h1>
+        <div id="barra"></div>
+    </div>
+
+    <main>
+        <form method="POST" action="">
+            <div id="box-usuario">
+                <label for="usuario">Usuário: </label>
+                <input type="text" name="usuario" id="usuario" required>
+            </div>
+
+            <div id="box-senha">
+                <label for="senha">Senha: </label>
+                <input type="password" name="senha" id="senha" required>
+            </div>
+            <div id="box-opcoes">
+                <label for="opcoes">Perfil:</label>
+                <select name="opcoes" id="opcoes" required>
+                    <option value="" selected disabled>Selecione uma opção</option>
+                    <option value="aluno">Aluno</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="coordenador">Coordenador</option>
+                </select>
+
+            </div>
+            <div id="button">
+                <button type="submit" name="acao" value="login">Entrar</button>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>
