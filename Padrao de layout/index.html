@@ -10,22 +10,31 @@
 </head>
 
 <body>
-    <div id="texto">
-        <h1>SOLICITAÇÕES UEMG-FRUTAL</h1>
-        <div id="barra"></div>
-    </div>
 
     <main>
+
+        <div id="banneruemg">
+            <img src="assets/Banner uemg.png" alt="">
+        </div>
+
+        <div id="texto">
+            <h1>SOLICITAÇÕES ACADÊMICAS</h1>
+            <div id="barra"></div>
+        </div>
+
         <form method="POST" action="">
             <div id="box-usuario">
-                <label for="usuario">Usuário: </label>
-                <input type="text" name="usuario" id="usuario" required>
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="usuario" id="usuario" placeholder="CPF" required>
             </div>
+            <hr>
 
             <div id="box-senha">
-                <label for="senha">Senha: </label>
-                <input type="password" name="senha" id="senha" required>
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="senha" id="senha" placeholder="Senha" required>
             </div>
+            <hr>
+            <div id="espaco"></div>
             <div id="box-opcoes">
                 <label for="opcoes">Perfil:</label>
                 <select name="opcoes" id="opcoes" required>
@@ -36,11 +45,14 @@
                 </select>
 
             </div>
+
             <div id="button">
                 <button type="submit" name="acao" value="login">Entrar</button>
             </div>
         </form>
     </main>
+
+    <script src="https://kit.fontawesome.com/5086c6dc28.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
