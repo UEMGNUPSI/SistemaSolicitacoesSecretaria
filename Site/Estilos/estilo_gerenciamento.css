@@ -9,11 +9,13 @@
     --azul-fundo: #4f758f40;
 }
 
+/*
 body{
     display: grid;
     grid-template-columns: auto 1fr;  
    
 }
+*/
 
 header {
     display: flex;
@@ -110,7 +112,7 @@ button{
 }
 
 /* Personalizar o scroll */
-#sidebar::-webkit-scrollbar {
+#sidebar::-webkit-scrollbar { 
     width: 12px; /* Largura da barra de rolagem */
     height: 12px; /* Altura da barra de rolagem horizontal, se necessário */
 }
