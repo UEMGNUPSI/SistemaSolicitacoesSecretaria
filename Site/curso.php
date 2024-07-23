@@ -106,29 +106,31 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 </form>
             
                 <!-- TABELA DOS CURSOS -->
-                <div class="row">
-                    <table class="table table-striped " >
-                        <thead>
-                            <tr>
-                                <th scope="col" style="width: 7%;">Id</th>
-                                <th scope="col" style="width: 80%;">Nome</th>
-                               <!-- <th scope="col" style="width: 6%;"></th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach ($res as $key => $value) {
-                                echo '<tr>';
-                                echo '<th scope="row">' . $value['idcur'] . '</th>';
-                                echo '<td>' . $value['nome_cur'] . '</td>';
-                                echo '<td width=250>';
-                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Atualizar '. $value['nome_cur'] .'" data-id="' . $value['idcur'] . '" data-nome="' . $value['nome_cur'] . '" style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
-                                echo '</td>';
-                                echo '</tr>';
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                <div class="table-wrapper">
+                    <div class="row">
+                        <table class="table table-striped " >
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 7%;">Id</th>
+                                    <th scope="col" style="width: 80%;">Nome</th>
+                                   <!-- <th scope="col" style="width: 6%;"></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($res as $key => $value) {
+                                    echo '<tr>';
+                                    echo '<th scope="row">' . $value['idcur'] . '</th>';
+                                    echo '<td>' . $value['nome_cur'] . '</td>';
+                                    echo '<td width=250>';
+                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Atualizar '. $value['nome_cur'] .'" data-id="' . $value['idcur'] . '" data-nome="' . $value['nome_cur'] . '" style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
+                                    echo '</td>';
+                                    echo '</tr>';
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- Paginação -->
                 <nav aria-label="Page navigation">
