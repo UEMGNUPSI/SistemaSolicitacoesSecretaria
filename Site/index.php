@@ -1,3 +1,27 @@
+<?php
+session_start();
+$resposta = null;
+require_once("dao/conexao.php");
+
+if (isset($_POST['acao'])){
+    $nome = $_POST['usuario'];
+    $senha = $_POST['senha'];
+
+    $sql = $pdo->prepare("SELECT * FROM administrador where nome_adm = ? and senha_adm = ?");
+    $sql->execute(array($nome, $senha));
+    
+    if ($sql->rowCount() > 0) {
+        $_SESSION['usuario'] = $nome;
+        header('Location: curso.php');
+        exit();
+    }else{
+        $resposta = "Usuário ou senha incorretos.";
+        die();
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -21,7 +45,12 @@
             <h1>SOLICITAÇÕES ACADÊMICAS</h1>
         </div>
 
-        <form method="POST" action="">
+        <form method="POST" action="index.php">
+            <div>
+                <?php if ($resposta){
+                    echo "<p style='color: #f00;'> $resposta </p>";
+                } ?>
+            </div>
             <div id="box-usuario">
                 <label for="usuario"><i class="fa-solid fa-user"></i></label>   
                 <input type="text" name="usuario" id="usuario" placeholder="CPF" required>

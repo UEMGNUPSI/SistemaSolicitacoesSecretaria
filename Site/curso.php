@@ -63,76 +63,95 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="Estilos/estilo_gerenciamento.css">
 </head>
 <body>
-        <!-- Cabeçalho -->
-        <header>
-            <h1>Gerenciamento de Cursos</h1>
-        </header>
+    <aside class="sidebar" id="sidebar">
+        <img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg">
+        <HR></HR>
+        <h4>Solicitações ADM</h4>
+        <HR></HR>
+        <button class="btn-sidebar" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-gerenciamento" aria-expanded="false" aria-controls="collapseExample">
+        Gerenciamento
+        </button>
+        <div class="collapse" id="collapse-gerenciamento">
+            <div class="card-body">
+                <a href="curso.php"><p>Curso</p></a>
+                <a href="pagina_tpu.php"><p>Tipo Usuário</p></a>
+            </div>
+        </div>
+    </aside>        
 
-        <main class="container">
-            <!-- Formulário de Filtro -->
-            <form class="form-horizontal" action="curso.php" method="get">
-                <div class="row">
-                    <div class="col">
-
-                    <!-- Botão de adicionar curso -->
-                    <button type="button" id="cursoNomeAdicionar" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adicionarCurso" title="Adicionar curso" >Adicionar Curso<i class="fa-solid fa-graduation-cap" style="margin-left: 5px;"></i></button>
-                    </div>
-                    <div class="col">
-                        <div class="controls">
-                            <input size="20" class="form-control" name="filtro" type="text" placeholder="Filtro (nome)" value="<?= $filtro ?? "" ?>">
+<!-- Cabeçalho -->
+        <div class="right-content">
+            <header>
+                <button id="botao-menu"><i class="fa-solid fa-bars"></i></button> <!-- botao de acionamento do menu -->
+                <h1 id="h1-header">Gerenciamento de Cursos</h1>
+            </header>
+            <main class="container">
+                <!-- Formulário de Filtro -->
+                <form class="form-horizontal" action="curso.php" method="get">
+                    <div class="row">
+                        <div class="col">
+                            <!-- Botão de adicionar curso -->
+                            <button type="button" id="cursoNomeAdicionar" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adicionarCurso" title="Adicionar curso" >Adicionar Curso<i class="fa-solid fa-graduation-cap" style="margin-left: 5px;"></i></button>
+                        </div>
+                        <div class="col">
+                            <div class="controls">
+                                <input size="20" class="form-control" name="filtro" type="text" placeholder="Filtro (nome)" value="<?= $filtro ?? "" ?>">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary" title="Filtrar" style="background-color: #46697F;"><i class="fa-solid fa-magnifying-glass" style="color: #FFF; width: 20px; height: 20px;"></i></button>
                         </div>
                     </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary" title="Filtrar" style="background-color: #46697F;"><i class="fa-solid fa-magnifying-glass" style="color: #FFF;"></i></button>
-                    </div>
-                </div>
-                <br/>
-            </form>
+                    <br/>
+                </form>
             
-            <!-- TABELA DOS CURSOS -->
-            <div class="row">
-                <table class="table table-striped" >
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 7%;">Id</th>
-                            <th scope="col" style="width: 80%;">Nome</th>
-                           <!-- <th scope="col" style="width: 6%;"></th> -->
-                        </tr>
-                    </thead>
-                    <tbody>
+                <!-- TABELA DOS CURSOS -->
+                <div class="row">
+                    <table class="table table-striped " >
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 7%;">Id</th>
+                                <th scope="col" style="width: 80%;">Nome</th>
+                               <!-- <th scope="col" style="width: 6%;"></th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($res as $key => $value) {
+                                echo '<tr>';
+                                echo '<th scope="row">' . $value['idcur'] . '</th>';
+                                echo '<td>' . $value['nome_cur'] . '</td>';
+                                echo '<td width=250>';
+                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Atualizar '. $value['nome_cur'] .'" data-id="' . $value['idcur'] . '" data-nome="' . $value['nome_cur'] . '" style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
+                                echo '</td>';
+                                echo '</tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Paginação -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
                         <?php
-                        foreach ($res as $key => $value) {
-                            echo '<tr>';
-                            echo '<th scope="row">' . $value['idcur'] . '</th>';
-                            echo '<td>' . $value['nome_cur'] . '</td>';
-                            echo '<td width=250>';
-                            echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Atualizar '. $value['nome_cur'] .'" data-id="' . $value['idcur'] . '" data-nome="' . $value['nome_cur'] . '" style="background-color: #46697F;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
-                            echo '</td>';
-                            echo '</tr>';
+                        if ($page > 1) {
+                            echo '<li class="page-item"><a class="page-link" href="?page='.($page - 1).'&filtro='.$filtro.'">Anterior</a></li>';
+                        }
+                        for ($i = 1; $i <= $total_pages; $i++) {
+                            $active = ($i == $page) ? 'active' : '';
+                            echo '<li class="page-item '.$active.'"><a class="page-link" href="?page='.$i.'&filtro='.$filtro.'">'.$i.'</a></li>';
+                        }
+                        if ($page < $total_pages) {
+                            echo '<li class="   "><a class="page-link" href="?page='.($page + 1).'&filtro='.$filtro.'">Próxima</a></li>';
                         }
                         ?>
-                    </tbody>
-                </table>
-            </div>
+                    </ul>
+                </nav>
 
-            <!-- Paginação -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <?php
-                    if ($page > 1) {
-                        echo '<li class="page-item"><a class="page-link" href="?page='.($page - 1).'&filtro='.$filtro.'">Anterior</a></li>';
-                    }
-                    for ($i = 1; $i <= $total_pages; $i++) {
-                        $active = ($i == $page) ? 'active' : '';
-                        echo '<li class="page-item '.$active.'"><a class="page-link" href="?page='.$i.'&filtro='.$filtro.'">'.$i.'</a></li>';
-                    }
-                    if ($page < $total_pages) {
-                        echo '<li class="   "><a class="page-link" href="?page='.($page + 1).'&filtro='.$filtro.'">Próxima</a></li>';
-                    }
-                    ?>
-                </ul>
-            </nav>
-        </main>
+                <h1>O sistema deve permitir incluir, alterar e consultar <b><i>curso</i></b> com os seguintes atributos: <i>idcur e nome_cur</i></h1>
+
+            </main>
+        </div>
 
     <!-- MODAL ATUALIZAR CURSO -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -188,10 +207,9 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="script/fontawesome.js"></script>
-    
-    <script type="text/javascript">
+    <script type="text/javascript" src="script/script.js"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
-
             const staticBackdrop = document.getElementById('staticBackdrop'); 
             const adicionarCursoModal = document.getElementById('adicionarCurso');
 
