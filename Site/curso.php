@@ -91,7 +91,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <div class="row">
                         <div class="col">
                             <!-- Botão de adicionar curso -->
-                            <button type="button" id="cursoNomeAdicionar" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adicionarCurso" title="Adicionar curso" >Adicionar Curso<i class="fa-solid fa-graduation-cap" style="margin-left: 5px;"></i></button>
+                            <button type="button" id="cursoNomeAdicionar" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-adicionar" title="Adicionar curso" >Adicionar Curso<i class="fa-solid fa-graduation-cap" style="margin-left: 5px;"></i></button>
                         </div>
                         <div class="col">
                             <div class="controls">
@@ -123,7 +123,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                     echo '<th scope="row">' . $value['idcur'] . '</th>';
                                     echo '<td>' . $value['nome_cur'] . '</td>';
                                     echo '<td width=250>';
-                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Atualizar '. $value['nome_cur'] .'" data-id="' . $value['idcur'] . '" data-nome="' . $value['nome_cur'] . '" style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
+                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-atualizar" title="Atualizar '. $value['nome_cur'] .'" data-id="' . $value['idcur'] . '" data-nome="' . $value['nome_cur'] . '" style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
                                     echo '</td>';
                                     echo '</tr>';
                                 }
@@ -149,14 +149,11 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                         ?>
                     </ul>
                 </nav>
-
-                <h1>O sistema deve permitir incluir, alterar e consultar <b><i>curso</i></b> com os seguintes atributos: <i>idcur e nome_cur</i></h1>
-
             </main>
         </div>
 
     <!-- MODAL ATUALIZAR CURSO -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-atualizar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -165,7 +162,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="modal-body">
                     <form id="updateForm" action="dao/curso.php" method="POST">
-                        <input type="hidden" id="cursoId" name="cursoId">
+                        <input type="hidden" id="cursoId" name="cursoId"> <!-- !Importante!  input invisível apenas para enviar o Id do curso no formulario -->
                         <div class="mb-3">
                             <label for="cursoNome" class="form-label">Nome do curso:</label>
                             <input type="text" class="form-control" id="cursoNome" name="cursoNome">
@@ -182,7 +179,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- MODAL ADICIONAR CURSO -->
-    <div class="modal fade" id="adicionarCurso" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-adicionar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -212,26 +209,24 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
     <script type="text/javascript" src="script/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const staticBackdrop = document.getElementById('staticBackdrop'); 
-            const adicionarCursoModal = document.getElementById('adicionarCurso');
+            const atualizarButtonModal = document.getElementById('modal-atualizar'); 
+            const adicionarButtonModal = document.getElementById('modal-adicionar');
 
             // FUNÇÃO PARA PEGAR BOTÃO DE ACIONAMENTO DO MODAL COM OS ATRIBUTOS PASSADOS A ELE 
-            staticBackdrop.addEventListener('shown.bs.modal', function (event) {
+            atualizarButtonModal.addEventListener('shown.bs.modal', function (event) {
                 const button = event.relatedTarget;
-                const cursoId = button.getAttribute('data-id');
+                const cursoId = button.getAttribute('data-id'); // id do curso
                 const cursoNome = button.getAttribute('data-nome');
-                const modalTitle = staticBackdrop.querySelector('.modal-title');
-                const modalBody = staticBackdrop.querySelector('.modal-body');
                 const inputModal = document.getElementById('cursoNome');
-                const Id = document.getElementById('cursoId');
-                Id.value = cursoId;
-                inputModal.value = cursoNome;
+                const Id = document.getElementById('cursoId'); // input invisivel do formulario
+                Id.value = cursoId; // definir o valor do input invisível para o id do curso
+                inputModal.value = cursoNome; // para o input do modal já ficar com o nome do curso digitado.
                 inputModal.focus();
             });
 
-            adicionarCursoModal.addEventListener('shown.bs.modal', function (event) {
-                const cursoNomeInput = document.getElementById('cursoInputAdicionar');
-                cursoNomeInput.focus();
+            adicionarButtonModal.addEventListener('shown.bs.modal', function (event) {
+                const Input = document.getElementById('cursoInputAdicionar');
+                Input.focus();
             });
 
             /*

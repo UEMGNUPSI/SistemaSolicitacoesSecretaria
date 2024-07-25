@@ -140,13 +140,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                 </ul>
             </nav>
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere perferendis quam vitae maxime voluptate eaque quae sapiente laboriosam unde quisquam, officia fugiat veniam non nam, labore praesentium odit! Corrupti, in!</h1>
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere perferendis quam vitae maxime voluptate eaque quae sapiente laboriosam unde quisquam, officia fugiat veniam non nam, labore praesentium odit! Corrupti, in!</h1>
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere perferendis quam vitae maxime voluptate eaque quae sapiente laboriosam unde quisquam, officia fugiat veniam non nam, labore praesentium odit! Corrupti, in!</h1>
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere perferendis quam vitae maxime voluptate eaque quae sapiente laboriosam unde quisquam, officia fugiat veniam non nam, labore praesentium odit! Corrupti, in!</h1>
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere perferendis quam vitae maxime voluptate eaque quae sapiente laboriosam unde quisquam, officia fugiat veniam non nam, labore praesentium odit! Corrupti, in!</h1>
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere perferendis quam vitae maxime voluptate eaque quae sapiente laboriosam unde quisquam, officia fugiat veniam non nam, labore praesentium odit! Corrupti, in!</h1>
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere perferendis quam vitae maxime voluptate eaque quae sapiente laboriosam unde quisquam, officia fugiat veniam non nam, labore praesentium odit! Corrupti, in!</h1>
+            
         </main>
     </div>
 
