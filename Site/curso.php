@@ -63,21 +63,10 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="Estilos/estilo_gerenciamento.css">
 </head>
 <body>
-    <aside class="sidebar" id="sidebar">
-        <img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg">
-        <HR></HR>
-        <h4>Solicitações ADM</h4>
-        <HR></HR>
-        <button class="btn-sidebar" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-gerenciamento" aria-expanded="false" aria-controls="collapseExample">
-        Gerenciamento
-        </button>
-        <div class="collapse" id="collapse-gerenciamento">
-            <div class="card-body">
-                <a href="curso.php"><p>Curso</p></a>
-                <a href="pagina_tpu.php"><p>Tipo Usuário</p></a>
-            </div>
-        </div>
-    </aside>        
+    <?php
+        include('sidebar.php');
+
+    ?>
 
 <!-- Cabeçalho -->
         <div class="right-content">
@@ -190,10 +179,10 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <form id="updateForm" action="dao/curso.php" method="POST">
                         <div class="mb-3">
                             <label for="cursoNome" class="form-label">Nome do curso:</label>
-                            <input type="text" class="form-control" id="cursoInputAdicionar" placeholder="Insira aqui" maxlength="30" name="cursoNome">
+                            <input type="text" class="form-control" id="cursoInputAdicionar" placeholder="Insira aqui" maxlength="30" name="cursoNome" required>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" name="adicionar-curso" class="btn btn-primary" data-bs-dismiss="modal">Adicionar</button>
+                            <button type="submit" name="adicionar-curso" class="btn btn-primary">Adicionar</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         </div>
                 </form>

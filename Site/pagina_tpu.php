@@ -67,6 +67,9 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
         </button>
         <div class="collapse" id="collapse-gerenciamento">
             <div class="card-body">
+                <a href="gerenciamento_administrador.php"><p>Administrador</p></a>
+                <a href="gerenciamento_aluno.php"><p>Aluno</p></a>
+                <a href="gerenciamento_coordenador.php"><p>Coordenador</p></a>
                 <a href="curso.php"><p>Curso</p></a>
                 <a href="pagina_tpu.php"><p>Tipo Usuário</p></a>
             </div>

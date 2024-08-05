@@ -23,7 +23,7 @@ body {
 
 /*
 .table-wrapper {
-    overflow-x: scroll;
+    overflow-x: auto;
     width: 100%; 
     padding: 20px;
 }
@@ -206,6 +206,13 @@ form {
     right: 0;
     top: 0;
 
+}
+
+.form-input{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 
