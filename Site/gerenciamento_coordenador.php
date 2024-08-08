@@ -174,61 +174,61 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 <div class="modal-body">
                     <form id="updateForm" action="dao/coordenador.php" method="POST">
                         <input type="hidden" id="coordenadorId" name="coordenadorId"> <!-- !Importante!  input invisível apenas para enviar o Id do coordenador no formulario -->
-                    <div class="form-input">
-                    <div class= "mb-3">
-                        <label for="coordenadorNome" class="form-label">Nome:</label>
-                        <input type="text" class="form-control" id="InputCoordenador" placeholder="Insira aqui" maxlength="30" name="coordenadorNome" required>
-                    </div>
-                    <div class= "mb-3">
-                            <label for="coordenadorCpf" class="form-label">CPF:</label>
-                            <input type="number" class="form-control" id="InputCpf" placeholder="Insira aqui" maxnumber="11" name="coordenadorCpf" required>    
-                    </div>
-                    </div>
-                     <div class="form-input">
-                        <div class= "mb-3">
-                            <label for="coordenadorCpf" class="form-label">Senha:</label>
-                            <input type="password" class="form-control" id="InputSenha" placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
-                    </div>
-                    <div class= "mb-3">
-                    <div class="form-input">
-                                <label for="Status:">Status: </label>
-                                <label for="status1">Ativo</label>
-                                <input type="radio" id="status1" name="status" checked value="1">
-                                <label for="status2">Inativo</label>
-                                <input type="radio" id="status2" name="status" value="0">
+                        <div class="form-input">
+                            <div class= "mb-3">
+                                <label for="coordenadorNome" class="form-label">Nome:</label>
+                                <input type="text" class="form-control" id="InputCoordenador" placeholder="Insira aqui" maxlength="30" name="coordenadorNome" required>
                             </div>
-                    </div>
-                    </div>
-                    <div class="form-input">
-                    <div class= "mb-3">
-                            <label for="coordenadorMasp" class="form-label">MASP:</label>
-                            <input type="number" class="form-control" id="InputMasp" placeholder="Insira aqui" name="coordenadorMasp" required>
-                    </div>
-                    <div class="mb-3">
-                            <label for="alunoCurso" class="form-label">Curso:</label>
-                            <select class="form-select" name="coordenadorCurso" id="InputCurso" aria-label="Default select example">
-                                <option selected disabled>Selecione o curso:</option>
-                                 <?php
-                                    $sql = $pdo->prepare("SELECT * FROM curso");
-                                    $sql->execute();
-                                    $info = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-                    
-
-                                    foreach ($info as $key => $value){
-                                        echo '<option value="'.$value['idcur'].'" >'.$value['nome_cur'].'</option>';
-                                    }
-
-
-                                ?>
-                            </select>
-                        </div>  
-                        </div>                           
-                     <div class="modal-footer">
-                            <button type="submit" name="atualizar-coordenador" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <div class= "mb-3">
+                                    <label for="coordenadorCpf" class="form-label">CPF:</label>
+                                    <input type="number" class="form-control" id="InputCpf" placeholder="Insira aqui" maxnumber="11" name="coordenadorCpf" required>    
+                            </div>
                         </div>
-                </form>
+                        <div class="form-input">
+                            <div class= "mb-3">
+                                <label for="alunoCurso" class="form-label">Curso:</label>
+                                <select class="form-select" name="coordenadorCurso" id="InputCurso" aria-label="Default select example">
+                                    <option selected disabled>Selecione o curso:</option>
+                                    <?php
+                                        $sql = $pdo->prepare("SELECT * FROM curso");
+                                        $sql->execute();
+                                        $info = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+                        
+
+                                        foreach ($info as $key => $value){
+                                            echo '<option value="'.$value['idcur'].'" >'.$value['nome_cur'].'</option>';
+                                        }
+
+
+                                    ?>
+                                </select>
+
+
+                            </div>
+                            <div class= "mb-3">
+                                <label for="Status:">Status: </label>
+                                <input type="radio" id="status1" name="status" checked value="1">
+                                <label for="status1">Ativo</label>
+                                <input type="radio" id="status2" name="status" value="0">
+                                <label for="status2">Inativo</label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class= "mb-3">
+                                <label for="coordenadorMasp" class="form-label">MASP:</label>
+                                <input type="number" class="form-control" id="InputMasp" placeholder="Insira aqui" name="coordenadorMasp" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="coordenadorCpf" class="form-label">Senha:</label>
+                                <input type="password" class="form-control" id="InputSenha" placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
+                            </div>  
+                        </div>                           
+                        <div class="modal-footer">
+                                <button type="submit" name="atualizar-coordenador" class="btn btn-primary">Salvar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -256,22 +256,11 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     </div>
                     <div class="form-input">
-                    <div class= "mb-3">
-                            <label for="coordenadorCpf" class="form-label">Senha:</label>
-                            <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
-                    </div>
-                    <div class= "mb-3">
-                            <label for="coordenadorMasp" class="form-label">MASP:</label>
-                            <input type="number" class="form-control"  placeholder="Insira aqui" maxlength="30" name="coordenadorMasp" required>
-                    </div>
-                    </div>
-                    <div class="form-input">
-                    
-                    <div class="mb-3">
+                        <div class= "mb-3">
                             <label for="alunoCurso" class="form-label">Curso:</label>
                             <select class="form-select" name="coordenadorCurso" id="coordenadorCurso" aria-label="Default select example">
                                 <option selected disabled>Selecione o curso:</option>
-                                 <?php
+                                    <?php
                                     $sql = $pdo->prepare("SELECT * FROM curso");
                                     $sql->execute();
                                     $info = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -285,12 +274,27 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                                 ?>
                             </select>
+
+
+                                        
+                        </div>
+                        <div class= "mb-3">
+                                <label for="coordenadorMasp" class="form-label">MASP:</label>
+                                <input type="number" class="form-control"  placeholder="Insira aqui" maxlength="30" name="coordenadorMasp" required>
+                        </div>
+                    </div>
+                    <div class="form-input">
+                    
+                    <div class="mb-3">
+                            <label for="coordenadorCpf" class="form-label">Senha:</label>
+                            <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
+    
                         </div>                        
                     </div>
                        
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" name="adicionar-coordenador" class="btn btn-primary" data-bs-dismiss="modal">Adicionar</button>
+                            <button type="submit" name="adicionar-coordenador" class="btn btn-primary">Adicionar</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         </div>
                 </form>

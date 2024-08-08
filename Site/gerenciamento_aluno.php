@@ -125,7 +125,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                     echo '<th scope="row">' . $value['idalu'] . '</th>';
                                     echo '<td>' . $value['nome_alu'] . '</td>';
                                     echo '<td width=250>';
-                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-atualizar" title="Atualizar '. $value['nome_alu'] .'" data-id="' . $value['idalu'] . '" data-nome="' . $value['nome_alu'] . '" data-cpf="'. $value['cpf_alu'] .'"data-ra="'.$value['ra_alu'].'"data-email="'.$value['email_alu'].'"data-celular="'.$value['celular_alu'].'"data-periodo="'.$value['periodo_alu'].'"data-turno="'.$value['turno_alu'].'"data-status="'.$value['status_alu'].'"data-senha="'.$value['senha_alu'].'"data-curso="'.$value['curso_idcur'].'"data-tipo="'.$value['tp_u_idtpu'].'"  style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
+                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-atualizar" title="Atualizar '. $value['nome_alu'] .'" data-id="' . $value['idalu'] . '" data-nome="' . $value['nome_alu'] . '" data-cpf="'. $value['cpf_alu'] .'"data-ra="'.$value['ra_alu'].'"data-email="'.$value['email_alu'].'"data-celular="'.$value['celular_alu'].'"data-turno="'.$value['turno_alu'].'"data-status="'.$value['status_alu'].'"data-senha="'.$value['senha_alu'].'"data-curso="'.$value['curso_idcur'].'"data-tipo="'.$value['tp_u_idtpu'].'"  style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
                                     echo '</td>';
                                     echo '</tr>';
                                 }
@@ -177,10 +177,23 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                         </div>
 
                         <div class="form-input">
+                            
                             <div class="mb-3">
-                                <label for="alunoSenha" class="form-label">Senha:</label>
-                                <input type="password" class="form-control" id="alunoSenha" name="alunoSenha">
+                                <label for="alunoCurso" class="form-label">Curso:</label>
+                                <select class="form-select" name="alunoCurso" id="alunoCurso" aria-label="Default select example">
+                                    <option selected disabled>Selecione o curso:</option>
+                                     <?php
+                                        $sql = $pdo->prepare("SELECT * FROM curso");
+                                        $sql->execute();
+                                        $info = $sql->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($info as $key => $value){
+                                            echo '<option value="'.$value['idcur'].'" >'.$value['nome_cur'].'</option>';
+                                        }
+                                    ?>
+                                </select>
                             </div>
+
+
                             <div class="mb-3">
                                 <label for="alunoRa" class="form-label">RA:</label>
                                 <input type="text" class="form-control" id="alunoRa" name="alunoRa">
@@ -203,29 +216,20 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="alunoTurno" class="form-label">Turno:</label>
-                                <input type="text" class="form-control" id="alunoTurno" name="alunoTurno">
-                            </div>
-                            <div class="mb-3">
-                                <label for="alunoPeriodo" class="form-label">Periodo:</label>
-                                <input type="text" class="form-control" id="alunoPeriodo" name="alunoPeriodo">
+                                <label class="form-label" for="alunoTurno">Turno:</label>
+                                <select class="form-select" name="alunoTurno" id="alunoTurno" aria-label="Default select example">
+                                    <option selected disabled>Selecione o Turno: </option>
+                                    <option value="diurno">Diurno</option>
+                                    <option value="integral">Integral</option>
+                                    <option value="noturno">Noturno</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-input">
-                            <div class="mb-3">
-                                <label for="alunoCurso" class="form-label">Curso:</label>
-                                <select class="form-select" name="alunoCurso" id="alunoCurso" aria-label="Default select example">
-                                    <option selected disabled>Selecione o curso:</option>
-                                     <?php
-                                        $sql = $pdo->prepare("SELECT * FROM curso");
-                                        $sql->execute();
-                                        $info = $sql->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($info as $key => $value){
-                                            echo '<option value="'.$value['idcur'].'" >'.$value['nome_cur'].'</option>';
-                                        }
-                                    ?>
-                                </select>
+                        <div class="mb-3">
+                                <label for="alunoSenha" class="form-label">Senha:</label>
+                                <input type="password" class="form-control" id="alunoSenha" name="alunoSenha">
                             </div>
                             
                             <div class="form-input">
@@ -280,9 +284,20 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="alunoSenha" class="form-label">Senha:</label>
-                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="alunoSenha">
-                            </div>
+                                <label for="alunoCurso" class="form-label">Curso:</label>
+                                <select class="form-select" name="alunoCurso" id="alunoCurso" aria-label="Default select example">
+                                    <option selected disabled>Selecione o curso</option>
+                                     <?php
+                                        $sql = $pdo->prepare("SELECT * FROM curso");
+                                        $sql->execute();
+                                        $info = $sql->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($info as $key => $value){
+                                            echo '<option value='.$value['idcur'].'>'.$value['nome_cur'].'</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>      
+
                             <div class="mb-3">
                                 <label for="alunoRa" class="form-label">RA:</label>
                                 <input type="text" class="form-control" placeholder="Insira aqui" maxlength="30" name="alunoRa">
@@ -303,29 +318,20 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="alunoTurno" class="form-label">Turno:</label>
-                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" name="alunoTurno">
-                            </div>
-                            <div class="mb-3">
-                                <label for="alunoPeriodo" class="form-label">Periodo:</label>
-                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" name="alunoPeriodo">
+                                <label class="form-label" for="alunoTurno">Turno:</label>
+                                <select class="form-select" name="alunoTurno" id="alunoTurno" aria-label="Default select example">
+                                    <option selected disabled>Selecione o Turno: </option>
+                                    <option value="diurno">Diurno</option>
+                                    <option value="integral">Integral</option>
+                                    <option value="noturno">Noturno</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="alunoCurso" class="form-label">Curso:</label>
-                                <select class="form-select" name="alunoCurso" id="alunoCurso" aria-label="Default select example">
-                                    <option selected disabled>Selecione o curso</option>
-                                     <?php
-                                        $sql = $pdo->prepare("SELECT * FROM curso");
-                                        $sql->execute();
-                                        $info = $sql->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($info as $key => $value){
-                                            echo '<option value='.$value['idcur'].'>'.$value['nome_cur'].'</option>';
-                                        }
-                                    ?>
-                                </select>
+                                <label for="alunoSenha" class="form-label">Senha:</label>
+                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="alunoSenha">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -357,7 +363,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 const alunoRA = button.getAttribute('data-ra');
                 const alunoEmail = button.getAttribute('data-email');
                 const alunoCelular = button.getAttribute('data-celular');
-                const alunoPeriodo= button.getAttribute('data-periodo');
                 const alunoTurno= button.getAttribute('data-turno');
                 const alunoStatus= button.getAttribute('data-status');
                 const alunoSenha = button.getAttribute('data-senha');
@@ -371,7 +376,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 document.getElementById('alunoRa').value = alunoRA;
                 document.getElementById('alunoEmail').value = alunoEmail;
                 document.getElementById('alunoCelular').value = alunoCelular;
-                document.getElementById('alunoPeriodo').value = alunoPeriodo;
                 document.getElementById('alunoTurno').value = alunoTurno;
                 document.getElementById('alunoStatus').value = alunoStatus;
                 document.getElementById('alunoSenha').value = alunoSenha;

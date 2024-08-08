@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once("dao/verificacao_login.php");
+
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de curso, por exemplo, é setado sessões e é redirecionado para esta página)
 if (isset($_SESSION['success'])) {
     echo "<script>alert('".$_SESSION['success']."');</script>";
@@ -178,13 +180,14 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="admSenha" class="form-label">Senha:</label>
-                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" id="admSenha" name="admSenha">
+                                <label for="admCelular" class="form-label">Celular:</label>
+                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" id="admCelular" name="admCelular">
                             </div>
                             <div class="mb-3">
-                            <label for="admCelular" class="form-label">Celular:</label>
-                            <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" id="admCelular" name="admCelular">
+                                <label for="admEstado" class="form-label">Estado:</label>
+                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" id="admEstado" name="admEstado">
                             </div>
+
                         </div>
                         <div class="form-input">
                             <div class="mb-3">
@@ -198,15 +201,16 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="admEstado" class="form-label">Estado:</label>
-                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" id="admEstado" name="admEstado">
+                                <label for="admSenha" class="form-label">Senha:</label>
+                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" id="admSenha" name="admSenha">
                             </div>
+
                             <div class="mb-3">
                                 <label for="Status:">Status: </label>
-                                <label for="status1">Ativo</label>
                                 <input type="radio" id="status1" checked name="admStatus" value="1">
-                                <label for="status2">Inativo</label>
+                                <label for="status1">Ativo</label>
                                 <input type="radio" id="status2" name="admStatus" value="0">
+                                <label for="status2">Inativo</label>
                             </div>
                         </div>
                                                
@@ -242,13 +246,16 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="admSenha" class="form-label">Senha:</label>
-                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="admSenha">
-                            </div>
-                            <div class="mb-3">
                                 <label for="admCelular" class="form-label">Celular:</label>
                                 <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" name="admCelular">
                             </div>
+
+                            <div class="mb-3">
+                                <label for="admEstado" class="form-label">Estado:</label>
+                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" name="admEstado">
+                            </div>
+
+
                         </div>
                         <div class="form-input">
                             <div class="mb-3">
@@ -262,8 +269,8 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="form-input">
                             <div class="mb-3">
-                                <label for="admEstado" class="form-label">Estado:</label>
-                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" name="admEstado">
+                                <label for="admSenha" class="form-label">Senha:</label>
+                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="admSenha">
                             </div>
                         </div>
                         <div class="modal-footer">

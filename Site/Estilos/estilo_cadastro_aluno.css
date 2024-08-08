@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#updateForm {
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 1300px;
+    
+}
+
+.header {
+   flex-direction: row;
+   justify-content: center;
+}
+
