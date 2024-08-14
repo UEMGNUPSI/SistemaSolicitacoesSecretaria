@@ -6,9 +6,10 @@ session_start(); // Inicia a sessão para guardar valores entre as páginas
 $coordenador = trim($_POST['coordenadorNome']);
 $cpf_crd = trim($_POST['coordenadorCpf']);
 $senha_crd = trim($_POST['coordenadorSenha']);
-$status_crd = trim($_POST['status']);
 $masp_crd = trim($_POST['coordenadorMasp']);
 $curso = trim($_POST['coordenadorCurso']);
+$celular = trim($_POST['coodenadorCelular']);
+
 
 
 
@@ -36,8 +37,8 @@ if (isset($_POST['adicionar-coordenador'])){
         exit();
 
     }else{
-        $sql = $pdo->prepare("INSERT INTO coordenador VALUES (null, ?, ?, ?, 1, ?, ?, ?)");
-        $sql->execute(array($coordenador, $cpf_crd, $senha_crd, $masp_crd, $curso, $tipo));
+        $sql = $pdo->prepare("INSERT INTO coordenador VALUES (null, ?, ?, ?, 1, ?, ?, ?, ?)");
+        $sql->execute(array($coordenador, $cpf_crd, $senha_crd, $masp_crd, $curso, $tipo, $celular));
         $_SESSION['success'] = 'Coordenador ' . $coordenador.  ' inserido com sucesso!';
         header("Location: ../gerenciamento_coordenador.php");
         exit();
@@ -46,9 +47,10 @@ if (isset($_POST['adicionar-coordenador'])){
 // Verifica se o formulário de atualizar curso foi enviado
 } else if (isset($_POST["atualizar-coordenador"])){
     $coordenadorId = $_POST['coordenadorId'];
-    $sql = $pdo->prepare("SELECT * FROM coordenador WHERE nome_crd = ?");
-    $sql->execute(array($coordenador));
+    $sql = $pdo->prepare("SELECT * FROM coordenador WHERE nome_crd = ?  AND idcrd <> ?");
+    $sql->execute(array($coordenador, $coordenadorId));
     $sql->fetchAll(PDO::FETCH_ASSOC);
+    $status_crd = $_POST['status'];
 
     if (empty($coordenador)){
         $_SESSION['error'] = 'Valor inválido!';

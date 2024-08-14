@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once("dao/conexao.php");
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de curso, por exemplo, é setado sessões e é redirecionado para esta página)
 if (isset($_SESSION['success'])) {

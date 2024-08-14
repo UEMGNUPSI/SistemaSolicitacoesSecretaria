@@ -46,8 +46,8 @@ if (isset($_POST['adicionar-administrador'])){
 
 // Verifica se o formulário de atualizar curso foi enviado 
 } else if (isset($_POST["atualizar-administrador"])){
-    $sql = $pdo->prepare("SELECT * FROM administrador WHERE cpf_adm = ?");
-    $sql->execute(array($cpf));
+    $sql = $pdo->prepare("SELECT * FROM administrador WHERE cpf_adm = ?  AND idadm <> ?");
+    $sql->execute(array($cpf, $admId));
     $sql->fetchAll(PDO::FETCH_ASSOC);
 
     if (empty($nome)){
@@ -56,7 +56,7 @@ if (isset($_POST['adicionar-administrador'])){
         exit();
 
     }else if($sql->rowCount() > 0){
-        $_SESSION['duplicated'] = 'O Administrador '.$nome.' já está cadastrado! Insira outro nome.';
+        $_SESSION['duplicated'] = 'O Administrador (CPF) já está cadastrado! Insira outro nome.';
         header("Location: ../gerenciamento_administrador.php");
         exit();
 

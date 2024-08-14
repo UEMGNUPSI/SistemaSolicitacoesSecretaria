@@ -18,10 +18,12 @@ if (isset($_POST['acao'])){
         $nome = $info[0]['nome_alu'];
          
         if ($sql->rowCount() > 0) {
+            $idUsuario = $info[0]['idalu'];
+            $cursoUsuario = $info[0]['curso_idcur'];
             $_SESSION['usuario'] = $cpf;
             $_SESSION['nome-usuario'] = $nome;
-            $_SESSION['tipo-usuario'] = $tipo;
-            header('Location: ../curso.php');
+            $_SESSION['tipo-usuario'] = strtolower($tipo);
+            header('Location: ../solicitacao_aluno.php');
             exit();
         }else{
            $_SESSION['ERROR'] = 'Aluno não encontrado. CPF ou senha incorreto(s).';
@@ -40,7 +42,7 @@ if (isset($_POST['acao'])){
         if ($sql->rowCount() > 0) {
             $_SESSION['usuario'] = $cpf;
             $_SESSION['nome-usuario'] = $nome;
-            $_SESSION['tipo-usuario'] = $tipo;
+            $_SESSION['tipo-usuario'] = strtolower($tipo);
             header('Location: ../curso.php');
             exit();
         }else{
@@ -59,7 +61,7 @@ if (isset($_POST['acao'])){
         if ($sql->rowCount() > 0) {
             $_SESSION['usuario'] = $cpf;
             $_SESSION['nome-usuario'] = $nome;
-            $_SESSION['tipo-usuario'] = $tipo;
+            $_SESSION['tipo-usuario'] = strtolower($tipo);
             header('Location: ../curso.php');
             exit();
         }else{

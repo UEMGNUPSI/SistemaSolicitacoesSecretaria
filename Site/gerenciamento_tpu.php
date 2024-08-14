@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once("dao/verificacao_login.php");
+
 if (isset($_SESSION['success'])) {
     echo "<script>alert('".$_SESSION['success']."');</script>";
     unset($_SESSION['success']);
@@ -57,24 +59,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
         
-    <aside class="sidebar" id="sidebar">
-        <img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg">
-        <HR></HR>
-        <h4>Solicitações ADM</h4>
-        <HR></HR>
-        <button class="btn-sidebar" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-gerenciamento" aria-expanded="false" aria-controls="collapseExample">
-        Gerenciamento
-        </button>
-        <div class="collapse" id="collapse-gerenciamento">
-            <div class="card-body">
-                <a href="gerenciamento_administrador.php"><p>Administrador</p></a>
-                <a href="gerenciamento_aluno.php"><p>Aluno</p></a>
-                <a href="gerenciamento_coordenador.php"><p>Coordenador</p></a>
-                <a href="curso.php"><p>Curso</p></a>
-                <a href="pagina_tpu.php"><p>Tipo Usuário</p></a>
-            </div>
-        </div>
-    </aside>     
+    <?php include_once("sidebar.php");?>   
 
 <!-- Cabeçalho -->
     <div class="right-content">

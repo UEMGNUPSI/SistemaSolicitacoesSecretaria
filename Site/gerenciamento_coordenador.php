@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once("dao/verificacao_login.php");
+
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de coordenador, por exemplo, é setado sessões e é redirecionado para esta página)
 if (isset($_SESSION['success'])) {
     echo "<script>alert('".$_SESSION['success']."');</script>";
@@ -67,25 +69,8 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="Estilos/estilo_gerenciamento.css">
 </head>
 <body>
-    <aside class="sidebar" id="sidebar">
-        <img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg">
-        <HR></HR>
-        <h4>Solicitações ADM</h4>
-        <HR></HR>
-        <button class="btn-sidebar" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-gerenciamento" aria-expanded="false" aria-controls="collapseExample">
-        Gerenciamento
-        </button>
-        <div class="collapse" id="collapse-gerenciamento">
-            <div class="card-body">
-                <a href="gerenciamento_administrador.php"><p>Administrador</p></a>
-                <a href="gerenciamento_aluno.php"><p>Aluno</p></a>
-                <a href="gerenciamento_coordenador.php"><p>Coordenador</p></a>
-                <a href="curso.php"><p>Curso</p></a>
-                <a href="pagina_tpu.php"><p>Tipo Usuário</p></a>
-            </div>
-        </div>
-    </aside>        
 
+    <?php include_once("sidebar.php");?>
 <!-- Cabeçalho -->
         <div class="right-content">
             <header>
@@ -134,7 +119,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                     echo '<td>' . $value['cpf_crd'] . '</td>';
                                     echo '<td>' . $value['nome_cur'] . '</td>';
                                     echo '<td width=250>';
-                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-atualizar" title="Atualizar '. $value['nome_crd'] .'" data-id="' . $value['idcrd'] . '" data-nome="' . $value['nome_crd'] . '" data-cpf="' . $value['cpf_crd'] . '" data-senha="' . $value['senha_crd'] . '" data-status="' . $value['status_crd'] . '" data-masp="' . $value['masp_crd'] . '" data-curso="' . $value['curso_idcur'] . '" style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
+                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-atualizar" title="Atualizar '. $value['nome_crd'] .'" data-id="' . $value['idcrd'] . '" data-nome="' . $value['nome_crd'] . '" data-cpf="' . $value['cpf_crd'] . '" data-senha="' . $value['senha_crd'] . '" data-status="' . $value['status_crd'] . '" data-masp="' . $value['masp_crd'] . '" data-curso="' . $value['curso_idcur'] . '" data-celular="'.$value['telefone_crd'].'"  style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
                                     echo '</td>';
                                     echo '</tr>';
                                 }
@@ -207,6 +192,23 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                             </div>
                             <div class= "mb-3">
+                                <label for="coordenadorMasp" class="form-label">MASP:</label>
+                                <input type="number" class="form-control" id="InputMasp" placeholder="Insira aqui" name="coordenadorMasp" required>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class= "mb-3">
+                                <label for="Celular" class="form-label">Celular:</label>
+                                <input type="number" class="form-control" id="InputCelular" placeholder="Insira aqui" name="coordenadorCelular" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="coordenadorCpf" class="form-label">Senha:</label>
+                                <input type="password" class="form-control" id="InputSenha" placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
+                            </div>  
+                        </div>    
+                        
+                        <div class="form-input">
+                        <div class= "mb-3">
                                 <label for="Status:">Status: </label>
                                 <input type="radio" id="status1" name="status" checked value="1">
                                 <label for="status1">Ativo</label>
@@ -214,16 +216,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                 <label for="status2">Inativo</label>
                             </div>
                         </div>
-                        <div class="form-input">
-                            <div class= "mb-3">
-                                <label for="coordenadorMasp" class="form-label">MASP:</label>
-                                <input type="number" class="form-control" id="InputMasp" placeholder="Insira aqui" name="coordenadorMasp" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="coordenadorCpf" class="form-label">Senha:</label>
-                                <input type="password" class="form-control" id="InputSenha" placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
-                            </div>  
-                        </div>                           
                         <div class="modal-footer">
                                 <button type="submit" name="atualizar-coordenador" class="btn btn-primary">Salvar</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -285,10 +277,13 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="form-input">
                     
-                    <div class="mb-3">
-                            <label for="coordenadorCpf" class="form-label">Senha:</label>
-                            <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
-    
+                        <div class="mb-3">
+                                <label for="Celular" class="form-label">Celular:</label>
+                                <input type="text" class="form-control"  placeholder="(xx) xxxxx-xxxx" maxlength="15"  name="coodenadorCelular" required>
+                        </div>  
+                        <div class="mb-3">
+                                <label for="coordenadorCpf" class="form-label">Senha:</label>
+                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="coordenadorSenha" required>
                         </div>                        
                     </div>
                        
@@ -323,6 +318,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                // const coordenadorStatus = button.getAttribute('data-status');
                 const coordenadorMasp = button.getAttribute('data-masp');
                 const coordenadorCurso = button.getAttribute('data-curso');
+                const coordenadorCelular = button.getAttribute('data-celular');
 
                 const inputNome = document.getElementById('InputCoordenador');
                 const inputCpf = document.getElementById('InputCpf');
@@ -330,6 +326,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                // const inputStatus = document.getElementById('InputStatus');
                 const inputMasp = document.getElementById('InputMasp');
                 const inputCurso = document.getElementById('InputCurso')
+                const inputCelular = document.getElementById('InputCelular');
                 const Id = document.getElementById('coordenadorId');
 
                 console.log(coordenadorMasp + ", " + coordenadorCurso)
@@ -341,6 +338,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                // inputStatus.value = coordenadorStatus;
                 inputMasp.value = coordenadorMasp; 
                 inputCurso.value = coordenadorCurso;
+                inputCelular.value = coordenadorCelular;
                 inputNome.focus();
             });
 

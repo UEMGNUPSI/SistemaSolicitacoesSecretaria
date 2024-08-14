@@ -3,7 +3,6 @@ session_start();
 
 require_once("dao/verificacao_login.php");
 
-echo "<script>alert('CPF: ".$_SESSION['usuario'].", Nome: ".$_SESSION['nome-usuario'].", Pessoa: ".$_SESSION['tipo-usuario']."');</script>";
 
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de curso, por exemplo, é setado sessões e é redirecionado para esta página)
 if (isset($_SESSION['success'])) {

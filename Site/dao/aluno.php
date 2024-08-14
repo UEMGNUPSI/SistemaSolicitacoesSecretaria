@@ -47,8 +47,8 @@ if (isset($_POST['adicionar-aluno'])){
 } else if (isset($_POST["atualizar-aluno"])){
     $status = trim($_POST['alunoStatus']);
     $alunoId = trim($_POST['alunoId']);
-    $sql = $pdo->prepare("SELECT * FROM aluno WHERE cpf_alu = ?");
-    $sql->execute(array($cpf));
+    $sql = $pdo->prepare("SELECT * FROM aluno WHERE cpf_alu = ?  AND idalu <> ?");
+    $sql->execute(array($cpf, $alunoId));
     $sql->fetchAll(PDO::FETCH_ASSOC);
 
     if (empty($nome)){
@@ -57,7 +57,7 @@ if (isset($_POST['adicionar-aluno'])){
         exit();
 
     }else if($sql->rowCount() > 0){
-        $_SESSION['duplicated'] = 'O aluno '.$cpf.' já está cadastrado! Insira outro nome.';
+        $_SESSION['duplicated'] = 'O aluno (CPF) já está cadastrado! Insira outro nome.';
         header("Location: ../gerenciamento_aluno.php");
         exit();
 
