@@ -3,6 +3,8 @@ session_start();
 
 require_once("dao/verificacao_login.php");
 
+require_once("dao/verifica_adm.php"); 
+
 if (isset($_SESSION['success'])) {
     echo "<script>alert('".$_SESSION['success']."');</script>";
     unset($_SESSION['success']);

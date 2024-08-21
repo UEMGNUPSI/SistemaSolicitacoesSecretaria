@@ -1,4 +1,15 @@
-<?php  session_start(); require_once("dao/verificacao_login.php"); ?>
+<?php  
+
+session_start(); 
+
+require_once("dao/verificacao_login.php"); 
+
+require_once("dao/verifica_adm.php"); 
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

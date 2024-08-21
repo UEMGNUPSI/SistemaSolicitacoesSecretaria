@@ -2,6 +2,8 @@
 require_once("conexao.php");
 session_start(); // Inicia a sessão para guardar valores entre as páginas
 
+require_once("verifica_adm.php"); 
+
 // Limpa espaços em branco antes de depois do input e guarda na variável $curso
 $curso = trim($_POST['cursoNome']);
 

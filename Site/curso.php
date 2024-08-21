@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once("dao/verificacao_login.php");
+require_once("dao/verifica_adm.php");
 
 
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de curso, por exemplo, é setado sessões e é redirecionado para esta página)

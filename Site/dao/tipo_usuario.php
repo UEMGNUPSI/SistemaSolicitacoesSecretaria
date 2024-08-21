@@ -1,6 +1,7 @@
 <?php
 require_once("conexao.php");
 session_start();
+require_once("verifica_adm.php"); 
 
 $tpu = trim($_POST['idtpu']);
 

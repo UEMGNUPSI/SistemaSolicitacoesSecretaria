@@ -27,7 +27,13 @@
 <aside class="sidebar" id="sidebar">
         <img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg">
         <HR></HR>
-        <h4>Solicitações ADM</h4>
+        <?php if ($perfil == "aluno"): ?>
+            <h4><i class="fa-solid fa-user" style="margin-right: 0.3rem;" aria-label="Aluno" title="Aluno">:</i> <?php echo $_SESSION['nome-usuario']; ?> </h4>
+        <?php elseif ($perfil == "administrador"): ?>
+            <h4><b>Adm</b>.: <?php echo $_SESSION['nome-usuario']; ?> </h4>
+        <?php else: ?>
+            <h4><b>Coordenador</b>: <?php echo $_SESSION['nome-usuario']; ?> </h4>
+        <?php endif; ?>
         <HR></HR>
         <button class="btn-sidebar" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-gerenciamento" aria-expanded="false" aria-controls="collapseExample">
         Gerenciamento
@@ -54,7 +60,7 @@
         <?php endif; ?>
         </div>
         <a href="dao/logout.php">
-            <div class="card-body my-2 bg-danger" id="logout">
+            <div class="my-2 p-1 rounded-1 btn btn-danger w-100" id="logout">
                 Logout
             </div>
         </a>

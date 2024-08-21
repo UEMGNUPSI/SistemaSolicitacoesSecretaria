@@ -8,15 +8,13 @@ $ra = trim($_POST['alunoRa']);
 $email = trim($_POST['alunoEmail']);
 $celular = trim($_POST['alunoCelular']);
 $turno = trim($_POST['alunoTurno']);
-$senha = trim($_POST['alunoSenha']);
+$senha = password_hash($_POST['alunoSenha'], PASSWORD_DEFAULT);
 $curso = trim($_POST['alunoCurso']);
-
 
 $sql2 = $pdo->prepare("SELECT idtpu FROM tp_u WHERE descricao_tpu = 'aluno'");
 $sql2->execute();
 $infoId = $sql2->fetchAll(PDO::FETCH_ASSOC);
 $tipo = $infoId[0]['idtpu'];
-
 
 
 if (isset($_POST['adicionar-aluno'])){

@@ -3,6 +3,8 @@ session_start();
 
 require_once("dao/verificacao_login.php");
 
+require_once("dao/verifica_adm.php"); 
+
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de coordenador, por exemplo, é setado sessões e é redirecionado para esta página)
 if (isset($_SESSION['success'])) {
     echo "<script>alert('".$_SESSION['success']."');</script>";
