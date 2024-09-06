@@ -55,7 +55,10 @@
                 <input type="password" name="senha" id="senha" placeholder="Senha" required>
             </div>
             <hr>
-            <div id="espaco"></div>
+            <div id="espaco"></div><div class="cadastro">
+                <p>Esqueceu sua senha? <a href="../recuperar_senha.php"> Clique Aqui </a></p>
+            </div>
+            <br>
             <div id="box-opcoes">
                 <label for="opcoes">Perfil:</label>
                 <select name="opcoes" id="opcoes" required>
@@ -71,7 +74,7 @@
                 <button type="submit" name="acao" value="login">Entrar</button>
             </div>
             <div class="cadastro">
-                <p>Não tem uma conta? <a href="cadastro_aluno.php">Cadastre-se agora!</a></p>
+                <p>Não tem uma conta? <a href="cadastro_aluno.php">Cadastre-se</a></p>
             </div>
         </form>
     </main>

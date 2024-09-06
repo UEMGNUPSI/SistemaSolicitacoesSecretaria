@@ -1,0 +1,157 @@
+
+/* ALUNO */
+
+
+.caixa-transparente {
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo preto com 70% de transparência */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagem-home-aluno {
+    width: 100%;
+    background-image: url("assets/UEMG FRUTAL.jpg");
+    background-repeat: no-repeat;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px ;
+}
+
+.informacoes-boas-vindas {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 
+}
+
+.informacoes-aluno {
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+    padding-left: 80px;
+    padding-bottom: 140px 
+}
+
+
+/* COORDENADOR */
+
+
+/* ADMINISTRADOR */
+
+.welcome-message {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+.datetime {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+  
+.datetime h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+  
+.datetime p {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.datetime h2 span {
+
+    font-weight: normal;
+    margin-left: 10px;
+}
+
+/* Estilos para a aba Avisos */
+
+.avisos {
+    background-color: #f0f0f0; /* cor de fundo da aba */
+    padding: 20px; /* espaçamento interno da aba */
+    border: 1px solid #ddd; /* borda da aba */
+    border-radius: 10px; /* arredondamento da borda */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* sombra da aba */
+  }
+  
+  .avisos h2 {
+    font-weight: bold; /* título em negrito */
+    margin-top: 0; /* título sem margem superior */
+  }
+  
+  .avisos ul {
+    list-style: none; /* lista sem marcadores */
+    padding: 0; /* lista sem espaçamento interno */
+    margin: 0; /* lista sem margem */
+  }
+  
+  .avisos li {
+    padding: 10px; /* espaçamento interno dos itens da lista */
+    border-bottom: 1px solid #ddd; /* borda inferior dos itens da lista */
+  }
+  
+  .avisos li:last-child {
+    border-bottom: none; /* último item da lista sem borda inferior */
+  }
+  
+  .avisos a {
+    text-decoration: none; /* links sem sublinhado */
+    color: #337ab7; /* cor dos links */
+  }
+  
+  .avisos a:hover {
+    color: #23527c; /* cor dos links ao passar o mouse */
+  }
+
+  .caixa-transparente {
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo preto com 70% de transparência */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagem-home-aluno {
+    width: 100%;
+    background-image: url("assets/UEMG FRUTAL.jpg");
+    background-repeat: no-repeat;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px ;
+}
+
+.informacoes-boas-vindas {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 
+}
+
+.informacoes-aluno {
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+    padding-left: 80px;
+}

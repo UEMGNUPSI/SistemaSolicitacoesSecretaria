@@ -23,6 +23,17 @@ if (isset($_SESSION['success'])) {
     <title>Inserção de Solicitação</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="Estilos/estilo_gerenciamento.css">
+    <style>
+        textarea {
+            resize: none;
+            height: 180px;
+        }
+
+        .form-bottom{
+            padding-bottom: 40px;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -40,8 +51,8 @@ if (isset($_SESSION['success'])) {
 
                     <div class="mb-3">
                         <label for="solicitacaoTipo" class="form-label">Tipo de Solicitação:</label>
-                        <select class="form-select" name="solicitacaoTipo" id="solicitacaoTipo" aria-label="Default select example" onchange="changeText()">
-                            <option selected disabled>Selecione o Tipo de Solicitação</option>
+                        <select class="form-select" name="solicitacaoTipo" aria-placeholder="askdjk" id="solicitacaoTipo" aria-label="Default select example" required onchange="changeText()">
+                            <option value = "" style="color: #919191;" >Selecione o Tipo de Solicitação</option>
                                 <option value = "Prova de 2 Oportunidade"> Prova de 2ª Oportunidade </option>
                                 <option value = "Revisão de notas"> Revisão de notas </option>
                                 <option value = "Ajuste de Matrícula"> Ajuste de Matrícula </option>
@@ -64,22 +75,22 @@ if (isset($_SESSION['success'])) {
 
                     <div class="mb-3">
                         <label for="solicitacaoSolicitacao" class="form-label">Solicitação:</label>
-                        <input type="text" class="form-control" id="solicitacaoInputAdicionar" placeholder="Insira aqui o que deseja solicitar" maxlength="255" name="solicitacaoSolicitacao" required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="solicitacaoJustificativa" class="form-label">Justificativa:</label>
-                        <input type="text" class="form-control" id="solicitacaoInputAdicionar" placeholder="Insira aqui sua justificativa" maxlength="255" name="solicitacaoJustificativa" required>
+                        <textarea class="form-control" id="solicitacaoInputAdicionar" placeholder="Insira aqui o que deseja solicitar" maxlength="255" name="solicitacaoSolicitacao" required></textarea>
                     </div>
 
                     <div class="mb-3">
+                        <label for="solicitacaoJustificativa" class="form-label">Justificativa:</label>
+                        <textarea class="form-control" id="solicitacaoInputAdicionar"  maxlength="255" name="solicitacaoJustificativa" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
                         <label for="solicitacaoArquivo" class="form-label">Arquivos de Comprovantes:</label>
-                        <input type="file" class="form-control" id="solicitacaoArquivo" name="solicitacaoArquivo[]" multiple="multiple">
+                        <input type="file" class="form-control" id="solicitacaoArquivo" name="solicitacaoArquivo[]" multiple="multiple" required>
                     </div>
                         <div class="mb-3">
                         <label for="solicitacaoCurso" class="form-label">Curso:</label>
-                            <select class="form-select" name="solicitacaoCurso" id="solicitacaoCurso" aria-label="Default select example">
-                                <option selected disabled>Selecione o curso</option>
+                            <select class="form-select" name="solicitacaoCurso" id="solicitacaoCurso" aria-label="Default select example" required>
+                                <option value="" style="color: #919191;" >Selecione o curso</option>
                                     <?php
                                         $sql = $pdo->prepare("SELECT * FROM curso");
                                         $sql->execute();
@@ -92,23 +103,23 @@ if (isset($_SESSION['success'])) {
                     </div>
 
                     <div class="mb-3">
-                        <label for="solicitacaoPeriodo" class="form-label">Selecione seu Periodo:</label>
-                            <select class="form-select" name="solicitacaoPeriodo" id="solicitacaoPeriodo" aria-label="Default select example">
-                                <option selected disabled>Selecione o seu Periodo</option>
-                                    <option value = "1"> 1º Periodo </option>
-                                    <option value = "2"> 2º Periodo </option>
-                                    <option value = "3"> 3º Periodo </option>
-                                    <option value = "4"> 4º Periodo </option>
-                                    <option value = "5"> 5º Periodo </option>
-                                    <option value = "6"> 6º Periodo </option>
-                                    <option value = "7"> 7º Periodo </option>
-                                    <option value = "8"> 8º Periodo </option>
-                                    <option value = "9"> 9º Periodo </option>
-                                    <option value = "10"> 10º Periodo </option>
+                        <label for="solicitacaoPeriodo" class="form-label">Período:</label>
+                            <select class="form-select" name="solicitacaoPeriodo" id="solicitacaoPeriodo" aria-label="Default select example" required>
+                                <option value="" style="color: #919191;" >Selecione o seu Período</option>
+                                    <option value = "1"> 1º Período </option>
+                                    <option value = "2"> 2º Período </option>
+                                    <option value = "3"> 3º Período </option>
+                                    <option value = "4"> 4º Período </option>
+                                    <option value = "5"> 5º Período </option>
+                                    <option value = "6"> 6º Período </option>
+                                    <option value = "7"> 7º Período </option>
+                                    <option value = "8"> 8º Período </option>
+                                    <option value = "9"> 9º Período </option>
+                                    <option value = "10"> 10º Período </option>
                             </select>
                     </div>
         
-                    <div>
+                    <div class="form-bottom">
                         <button type="submit" name="adicionar-solicitacao" class="btn btn-primary" id="button-adicionar">Adicionar</button>
                         <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                     </div>              

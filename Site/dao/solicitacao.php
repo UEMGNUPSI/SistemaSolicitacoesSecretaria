@@ -5,6 +5,9 @@ session_start();
 $idUsuario =  $_SESSION['id-usuario'];
 $cursoUsuario = $_SESSION['curso-idcur'];
 
+$tipos_permitidos = ['application/pdf', 'image/jpeg', 'image/png'];
+$extensoes_permitidas = ['pdf', 'jpg', 'jpeg', 'png'];
+
 if (isset($_POST['adicionar-solicitacao'])) {
     $solicitacao = trim($_POST['solicitacaoSolicitacao']);
     $justificativa = trim($_POST['solicitacaoJustificativa']);
@@ -25,12 +28,32 @@ if (isset($_POST['adicionar-solicitacao'])) {
 
             // Verificar se o arquivo foi enviado sem erros
             if ($error == 0) {
-                // Mover o arquivo para uma pasta específica
-                $caminho = '../uploads/' . $nomeArquivo;
-                move_uploaded_file($tmpName, $caminho);
+                // Verificar se o tipo de arquivo é permitido
+                if (in_array($type, $tipos_permitidos)) {
+                    // Verificar se a extensão do arquivo é permitida
+                    $extensao = strtolower(pathinfo($nomeArquivo, PATHINFO_EXTENSION));
+                    if (in_array($extensao, $extensoes_permitidas)) {
+                        // Gerar um nome único para o arquivo
+                        $nomeUnico = uniqid() . '.' . $extensao;
+                        $caminho = '../uploads/' . $nomeUnico;
 
-                // Salvar o nome do arquivo no array
-                $nomesArquivos[] = $nomeArquivo;
+                        // Mover o arquivo para uma pasta específica
+                        move_uploaded_file($tmpName, $caminho);
+
+                        // Salvar o nome do arquivo no array
+                        $nomesArquivos[] = $nomeUnico;
+                    } else {
+                        // Extensão não permitida
+                        $_SESSION['error'] = 'Extensão de arquivo não permitida!';
+                        header("Location: ../solicitacao_aluno.php");
+                        exit();
+                    }
+                } else {
+                    // Tipo de arquivo não permitido
+                    $_SESSION['error'] = 'Tipo de arquivo não permitido!';
+                    header("Location: ../solicitacao_aluno.php");
+                    exit();
+                }
             }
         }
 

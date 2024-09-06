@@ -79,11 +79,6 @@ if (isset($_SESSION['success'])) {
                             </select>
                         </div>        
                         <div class="mb-3">
-                                <label for="alunoPeriodo" class="form-label">Periodo:</label>
-                                <input type="number" class="form-control"  placeholder="Insira aqui" maxlength="30" name="alunoPeriodo"required>
-                        </div>
-
-                        <div class="mb-3">
                                 <label for="alunoCurso" class="form-label">Curso:</label>
                                 <select class="form-select" name="alunoCurso" id="alunoCurso" required>
                                     <option selected disabled>Selecione o curso</option>

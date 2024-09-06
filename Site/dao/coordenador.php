@@ -7,7 +7,7 @@ require_once("verifica_adm.php");
 // Limpa espaços em branco antes de depois do input e guarda na variável $curso
 $coordenador = trim($_POST['coordenadorNome']);
 $cpf_crd = trim($_POST['coordenadorCpf']);
-$senha_crd = trim($_POST['coordenadorSenha']);
+$senha_crd = password_hash($_POST['coordenadorSenha'], PASSWORD_DEFAULT);
 $masp_crd = trim($_POST['coordenadorMasp']);
 $curso = trim($_POST['coordenadorCurso']);
 $celular = trim($_POST['coodenadorCelular']);
@@ -24,7 +24,7 @@ $tipo = $infoId[0]['idtpu'];
 // Verifica se o formulário de adicionar Coordenador foi enviado
 if (isset($_POST['adicionar-coordenador'])){
     $sql = $pdo->prepare("SELECT * FROM coordenador WHERE cpf_crd = ?");
-    $sql->execute(array($coordenador));
+    $sql->execute(array($cpf_crd));
 
     $sql->fetchAll(PDO::FETCH_ASSOC); //Retorna um array com os resultados obtidos através da consulta no banco de dados
 

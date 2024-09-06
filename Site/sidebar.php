@@ -28,7 +28,7 @@
         <img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg">
         <HR></HR>
         <?php if ($perfil == "aluno"): ?>
-            <h4><i class="fa-solid fa-user" style="margin-right: 0.3rem;" aria-label="Aluno" title="Aluno">:</i> <?php echo $_SESSION['nome-usuario']; ?> </h4>
+            <h4><i class="fa-solid fa-user" style="margin-right: 0.3rem;" aria-label="Aluno" title="Aluno"></i> <?php echo $_SESSION['nome-usuario']; ?> </h4>
         <?php elseif ($perfil == "administrador"): ?>
             <h4><b>Adm</b>.: <?php echo $_SESSION['nome-usuario']; ?> </h4>
         <?php else: ?>

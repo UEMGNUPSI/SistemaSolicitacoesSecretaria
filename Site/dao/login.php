@@ -28,18 +28,18 @@ if (isset($_POST['acao'])){
                 $_SESSION['curso-idcur']  = $cursoUsuario;
                 $_SESSION['nome-usuario'] = $nome;
                 $_SESSION['tipo-usuario'] = strtolower($tipo);
-                $_SESSION['success']      = "id: ".$idUsuario.", Nome: ".$nome." Id curso: ".$cursoUsuario."" ;
+                $_SESSION['success']      = "id: ".$_SESSION['id-usuario'].", Curso: ".$_SESSION['curso-idcur']."" ;
 
-                header('Location: ../solicitacao_aluno.php');
+                header('Location: ../home.php');
                 exit();
             } else {
                 // Falha na senha
-                $_SESSION['ERROR'] = "Senha incorreto(s)";
+                $_SESSION['ERROR'] = "Login ou senha incorretos";
                 header("Location: ../index.php");
                 exit();
             }
         }else{
-            $_SESSION['ERROR'] = "CPF";
+            $_SESSION['ERROR'] = "Login ou senha incorretos ";
             header("Location: ../index.php");
             exit();
         }
@@ -56,7 +56,7 @@ if (isset($_POST['acao'])){
             $_SESSION['usuario'] = $cpf;
             $_SESSION['nome-usuario'] = $nome;
             $_SESSION['tipo-usuario'] = strtolower($tipo);
-            header('Location: ../curso.php');
+            header('Location: ../home.php');
             exit();
         }else{
            $_SESSION['ERROR'] = 'Administrador não encontrado. CPF ou senha incorreto(s).';
@@ -65,22 +65,36 @@ if (isset($_POST['acao'])){
         }
 
     }else{
-        $sql = $pdo->prepare("SELECT * FROM coordenador where cpf_crd = ? and senha_crd = ?");
-        $sql->execute(array($cpf, $senha));
+
+        $sql = $pdo->prepare("SELECT * FROM coordenador where cpf_crd = ?");
+        $sql->execute(array($cpf));
         
         $info = $sql->fetchAll(PDO::FETCH_ASSOC); 
         $nome = $info[0]['nome_crd'];
-         
-        if ($sql->rowCount() > 0) {
-            $_SESSION['usuario'] = $cpf;
-            $_SESSION['nome-usuario'] = $nome;
-            $_SESSION['tipo-usuario'] = strtolower($tipo);
-            header('Location: ../curso.php');
-            exit();
+        $idUsuario = $info[0]['idcrd'];
+        $senhaCript = $info[0]['senha_crd'];
+
+        if ($sql->rowCount() > 0){
+            if (password_verify($senha, $senhaCript)) { 
+                // Sucesso no login
+                $_SESSION['usuario']      = $cpf;
+                $_SESSION['id-usuario']   = $idUsuario;
+                $_SESSION['nome-usuario'] = $nome;
+                $_SESSION['tipo-usuario'] = strtolower($tipo);
+                $_SESSION['success']      = "id: ".$_SESSION['id-usuario'].", Tipo: ".$_SESSION['tipo-usuario']."" ;
+
+                header('Location: ../home.php');
+                exit();
+            } else {
+                // Falha na senha
+                $_SESSION['ERROR'] = "Login ou senha incorretos";
+                header("Location: ../index.php");
+                exit();
+            }
         }else{
-           $_SESSION['ERROR'] = 'Coordenador não encontrado. CPF ou senha incorreto(s).';
-           header('Location: ../index.php');
-           exit();
+            $_SESSION['ERROR'] = "Login ou senha incorretos ";
+            header("Location: ../index.php");
+            exit();
         }
     }
 }
