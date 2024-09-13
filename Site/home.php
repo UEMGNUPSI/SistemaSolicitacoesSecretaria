@@ -34,7 +34,7 @@
 
             <header>
                 <button id="botao-menu"><i class="fa-solid fa-bars"></i></button> <!-- botao de acionamento do menu -->
-                <h1 id="h1-header">Página inicial - Aluno</h1>
+                <h1 id="h1-header">Página inicial</h1>
             </header>
 
             <!-- Parte de boas-vindas ao usuário -->

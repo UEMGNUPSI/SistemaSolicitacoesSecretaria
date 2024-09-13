@@ -25,10 +25,13 @@
 </style>
 
 <aside class="sidebar" id="sidebar">
-        <img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg">
+        <a href="home.php"><img src="assets/Banner uemg.png" id="banner-uemg" alt="banner uemg"></a>
         <HR></HR>
         <?php if ($perfil == "aluno"): ?>
-            <h4><i class="fa-solid fa-user" style="margin-right: 0.3rem;" aria-label="Aluno" title="Aluno"></i> <?php echo $_SESSION['nome-usuario']; ?> </h4>
+            <h4 class="mb-3"><i class="fa-solid fa-user" style="margin-right: 0.3rem;" aria-label="Aluno" title="Aluno"></i> <?php echo $_SESSION['nome-usuario']; ?></h4>
+            <a href="dados_aluno.php" class=" link-light link-opacity-50-hover">
+                <h4><i class="fa-solid fa-gear"></i> Informações da Conta</h4>
+            </a>
         <?php elseif ($perfil == "administrador"): ?>
             <h4><b>Adm</b>.: <?php echo $_SESSION['nome-usuario']; ?> </h4>
         <?php else: ?>

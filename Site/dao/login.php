@@ -28,7 +28,7 @@ if (isset($_POST['acao'])){
                 $_SESSION['curso-idcur']  = $cursoUsuario;
                 $_SESSION['nome-usuario'] = $nome;
                 $_SESSION['tipo-usuario'] = strtolower($tipo);
-                $_SESSION['success']      = "id: ".$_SESSION['id-usuario'].", Curso: ".$_SESSION['curso-idcur']."" ;
+                // $_SESSION['success']      = "id: ".$_SESSION['id-usuario'].", Curso: ".$_SESSION['curso-idcur']."" ;
 
                 header('Location: ../home.php');
                 exit();
@@ -81,7 +81,7 @@ if (isset($_POST['acao'])){
                 $_SESSION['id-usuario']   = $idUsuario;
                 $_SESSION['nome-usuario'] = $nome;
                 $_SESSION['tipo-usuario'] = strtolower($tipo);
-                $_SESSION['success']      = "id: ".$_SESSION['id-usuario'].", Tipo: ".$_SESSION['tipo-usuario']."" ;
+                // $_SESSION['success']      = "id: ".$_SESSION['id-usuario'].", Tipo: ".$_SESSION['tipo-usuario']."" ;
 
                 header('Location: ../home.php');
                 exit();
