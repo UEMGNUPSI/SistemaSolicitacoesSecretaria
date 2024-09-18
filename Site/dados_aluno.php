@@ -81,8 +81,12 @@ $alunoCurso    = $info[0]['curso_idcur'];
                     </div>
                     <div class="mb-3">
                         <label for="turno" class="form-label">Turno:</label>
-                        <input type="text" class="form-control" id="turno" name="Turno" value="<?php echo $alunoTurno; ?>" required>
-                        
+                        <select class="form-select" name="Turno" id="turno" aria-label="Default select example">
+                            <option selected value="<?php echo $alunoTurno ?>" style="color: darkgray;" ><?php echo $alunoTurno; ?> // atual</option>
+                            <option value="diurno">Diurno</option>
+                            <option value="integral">Integral</option>
+                            <option value="noturno">Noturno</option>
+                        </select>
                     </div>
                         <div class="mb-3">
                         <label for="curso" class="form-label">Curso:</label>
@@ -101,7 +105,9 @@ $alunoCurso    = $info[0]['curso_idcur'];
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary" id="button-adicionar"  data-bs-toggle="modal" data-bs-target="#modal-confirmar">Salvar</button>
+                        <button type="button" class="btn btn-secondary" id="button-adicionar"  data-bs-toggle="modal" data-bs-target="#modal-alterar-senha">Alterar Senha</button>
 
+                        <!-- modal de confimar alterações -->
                         <div class="modal fade" id="modal-confirmar" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -116,9 +122,42 @@ $alunoCurso    = $info[0]['curso_idcur'];
                             </div>
                             </div>
                         </div>
-                        </div>
-                    </div>              
+                        </div>   
+                    </div>       
         </form>
+                
+        <!-- modal de alterar a senha -->
+        <form action="dao/aluno_confirmar_alteracoes.php" method="POST">
+            <div class="modal fade" id="modal-alterar-senha" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Alterar a senha</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="SenhaAtual">Senha Atual:</label>
+                        <input type="text" class="form-control" name="senhaAtual" id="SenhaAtual" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="SenhaAtual">Nova Senha:</label>
+                        <input type="text" class="form-control" name="senhaAtual" id="SenhaAtual" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="SenhaAtual">Confirmar Nova Senha:</label>
+                        <input type="text" class="form-control" name="senhaAtual" id="SenhaAtual" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="Alteracao-senha" class="btn btn-primary">Confirmar</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </form>
+
     </div>                     
                 <!-- Modal -->
 
