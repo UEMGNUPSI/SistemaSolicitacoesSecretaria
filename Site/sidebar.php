@@ -53,8 +53,8 @@
                 <a href="gerenciamento_aluno.php"><p>Aluno</p></a>
                 <a href="gerenciamento_coordenador.php"><p>Coordenador</p></a>
                 <a href="curso.php"><p>Curso</p></a>
-                <a href="gerenciamento_tpu.php"><p>Tipo Usuário</p></a>
                 <a href="gerenciamento_encaminhamento.php"><p>Encaminhamento</p></a>
+                <a href="gerenciamento_solicitacao.php"><p>Solicitações</p></a>
             </div>
         <?php else:?> <!-- coordenador -->
             <div class="card-body">

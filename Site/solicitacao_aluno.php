@@ -86,6 +86,7 @@ if (isset($_SESSION['success'])) {
                     <div class="mb-3">
                         <label for="solicitacaoArquivo" class="form-label">Arquivos de Comprovantes:</label>
                         <input type="file" class="form-control" id="solicitacaoArquivo" name="solicitacaoArquivo[]" multiple="multiple" required>
+                        <p style="font-size: 0.92rem;"><b>Apenas arquivos do tipo pdf, png e jpeg são permitidos *</b></p>
                     </div>
                         <div class="mb-3">
                         <label for="solicitacaoCurso" class="form-label">Curso:</label>
