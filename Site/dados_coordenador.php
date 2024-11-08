@@ -87,7 +87,10 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col">
 
                         <?php if ($numeroCur == 0): ?>
-                            <b><p>Para adicionar coordenador, é necessário inserir, pelo menos, um <a href="curso.php">curso</a></p></b>
+                            <b>
+                                <p>Para adicionar coordenador, é necessário inserir, pelo menos, um <a
+                                        href="curso.php">curso</a></p>
+                            </b>
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#modal-adicionar"
                                 title="Para adicionar coordenador, é necessário inserir, pelo menos, um curso"
@@ -137,7 +140,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                 echo '<td>' . $value['cpf_crd'] . '</td>';
                                 echo '<td>' . $value['nome_cur'] . '</td>';
                                 echo '<td width=250>';
-                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-atualizar" title="Atualizar ' . $value['nome_crd'] . '" data-id="' . $value['idcrd'] . '" data-nome="' . $value['nome_crd'] . '" data-cpf="' . $value['cpf_crd'] . '" data-senha="' . $value['senha_crd'] . '" data-status="' . $value['status_crd'] . '" data-masp="' . $value['masp_crd'] . '" data-curso="' . $value['curso_idcur'] . '" data-celular="' . $value['telefone_crd'] . '"  style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
+                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-atualizar" title="Atualizar ' . $value['nome_crd'] . '" data-id="' . $value['idcrd'] . '" data-nome="' . $value['nome_crd'] . '" data-cpf="' . $value['cpf_crd'] . '" data-status="' . $value['status_crd'] . '" data-masp="' . $value['masp_crd'] . '" data-curso="' . $value['curso_idcur'] . '" data-celular="' . $value['telefone_crd'] . '"  style="background-color: #46697F; width: 42px; height: 38px;"><i class="fa-solid fa-pen" style="color: #FFF;"></i> </button>';
                                 echo '</td>';
                                 echo '</tr>';
                             }
@@ -221,14 +224,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                     name="coordenadorCelular" required>
                             </div>
                             <div class="mb-3">
-                                <label for="coordenadoSenha" class="form-label">Senha:</label>
-                                <input type="password" class="form-control" id="InputSenha" placeholder="Insira aqui"
-                                    maxlength="30" name="coordenadorSenha" required>
-                            </div>
-                        </div>
-
-                        <div class="form-input">
-                            <div class="mb-3">
                                 <label for="Status:">Status: </label>
                                 <input type="radio" id="status1" name="status" checked value="1">
                                 <label for="status1">Ativo</label>
@@ -237,10 +232,12 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <input type="hidden" id="coordenadorSenha" name="coordenadorSenha" value="">
-                            <button type="submit" id="redefinir-senha" name="redefinirSenha"
-                                class="btn btn-primary">Redefinir Senha</button>
+                        <div class="form-input">
+                            <div class="mb-3">
+                                <input type="hidden" id="coordenadorSenha" name="coordenadorSenha" value="">
+                                <button type="submit" id="redefinir-senha" name="redefinirSenha"
+                                    class="btn btn-primary">Redefinir Senha</button>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="atualizar-coordenador" class="btn btn-primary">Salvar</button>
@@ -350,12 +347,10 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 const coordenadorId = button.getAttribute('data-id'); // id do curso
                 const coordenadorNome = button.getAttribute('data-nome');
                 const coordenadorCpf = button.getAttribute('data-cpf');
-                const coordenadorSenha = button.getAttribute('data-senha');
                 // const coordenadorStatus = button.getAttribute('data-status');
                 const coordenadorMasp = button.getAttribute('data-masp');
                 const coordenadorCurso = button.getAttribute('data-curso');
                 const coordenadorCelular = button.getAttribute('data-celular');
-
                 const inputNome = document.getElementById('InputCoordenador');
                 const inputCpf = document.getElementById('InputCpf');
                 const inputSenha = document.getElementById('InputSenha');
@@ -370,7 +365,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 Id.value = coordenadorId; // definir o valor do input invisível para o id do curso
                 inputNome.value = coordenadorNome;
                 inputCpf.value = coordenadorCpf;
-                inputSenha.value = coordenadorSenha;
                 // inputStatus.value = coordenadorStatus;
                 inputMasp.value = coordenadorMasp;
                 inputCurso.value = coordenadorCurso;

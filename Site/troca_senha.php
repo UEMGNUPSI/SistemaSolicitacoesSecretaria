@@ -24,9 +24,7 @@
             $result_atualizar_senha = $pdo->prepare($query_atualizar_senha);
             $result_atualizar_senha->bindParam(':nova_senha', $nova_senha_hash);
             $result_atualizar_senha->bindParam(':idalu', $idalu);
-
-            var_dump($idalu);
-            
+    
             try {
                 $result_atualizar_senha->execute();
                 $mensagem = "<p>Sua senha foi atualizada com sucesso! Você vai ser redirecionado em 5 segundos!</p>";

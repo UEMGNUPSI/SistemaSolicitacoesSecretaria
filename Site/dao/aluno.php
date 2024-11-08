@@ -4,6 +4,7 @@ session_start();
 
 $nome = trim($_POST['alunoNome']);
 $cpf = trim($_POST['alunoCpf']);
+$dt_nasc = trim($_POST['alunoDt_nasc']);
 $ra = trim($_POST['alunoRa']);
 $email = trim($_POST['alunoEmail']);
 $celular = trim($_POST['alunoCelular']);
@@ -16,6 +17,7 @@ $sql2->execute();
 $infoId = $sql2->fetchAll(PDO::FETCH_ASSOC);
 $tipo = $infoId[0]['idtpu'];
 
+$dataNascFormatada = date('d/m/Y', strtotime($dt_nasc));
 
 if (isset($_POST['adicionar-aluno'])){
     $sql = $pdo->prepare("SELECT * FROM aluno WHERE cpf_alu = ?");
@@ -34,8 +36,8 @@ if (isset($_POST['adicionar-aluno'])){
         exit();
 
     }else{
-        $sql = $pdo->prepare("INSERT INTO aluno VALUES (null, ?,?,?,?,?,?,1,?,?,?)");
-        $sql->execute(array($nome,$cpf,$ra,$email,$celular,$turno,$senha,$curso,$tipo));
+        $sql = $pdo->prepare("INSERT INTO aluno VALUES (null, ?,?,?,?,?,?,?,1,?,?,?)");
+        $sql->execute(array($nome,$cpf,$dt_nasc,$ra,$email,$celular,$turno,$senha,$curso,$tipo));
         $_SESSION['success'] = 'Aluno ' . $nome.  ' inserido com sucesso!';
         header("Location: ../gerenciamento_aluno.php");
         exit();
@@ -60,11 +62,22 @@ if (isset($_POST['adicionar-aluno'])){
         exit();
 
     }else{
-        $sql = $pdo->prepare("UPDATE aluno SET nome_alu = ?, cpf_alu = ?, ra_alu = ?, email_alu = ?, celular_alu = ?, turno_alu = ?, status_alu = ?, senha_alu = ?, curso_idcur = ?, tp_u_idtpu = ? WHERE idalu = ?");
-        $sql->execute(array($nome,$cpf,$ra,$email,$celular,$turno,$status,$senha,$curso,$tipo,$alunoId));
+        $sql = $pdo->prepare("UPDATE aluno SET nome_alu = ?, cpf_alu = ?,dt_nasc_alu = ?, ra_alu = ?, email_alu = ?, celular_alu = ?, turno_alu = ?, status_alu = ?,curso_idcur = ?, tp_u_idtpu = ? WHERE idalu = ?");
+        $sql->execute(array($nome,$cpf,$dt_nasc,$ra,$email,$celular,$turno,$status,$curso,$tipo,$alunoId));
         $_SESSION['success'] = 'Aluno atualizado com sucesso!';
         header("Location: ../gerenciamento_aluno.php");
         exit();
     }
+} else if (isset($_POST["redefinirSenha"])){
+    $alunoId = trim($_POST['alunoId']);
+    $cpf = trim($_POST['alunoCpf']);
+    $senha_hash = password_hash($cpf, PASSWORD_DEFAULT);
+    $sql = $pdo->prepare("UPDATE aluno SET senha_alu = :senha_hash WHERE idalu = :alunoId");
+    $sql->execute(array(':senha_hash' => $senha_hash, ':alunoId' => $alunoId));
+    $_SESSION['success'] = 'Senha atualizada com sucesso!';
+    header("Location: ../gerenciamento_aluno.php");
+    exit();
+
 }
+
 ?>

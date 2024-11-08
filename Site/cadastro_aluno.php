@@ -42,9 +42,16 @@ if (isset($_SESSION['success'])) {
                                 <label for="alunoNome" class="form-label">Nome:</label>
                                 <input type="text" class="form-control" id="alunoInputAdicionar" placeholder="Insira aqui" maxlength="30" name="alunoNome" required>
                         </div>
+
                         <div class="mb-3">
                                 <label for="alunoCpf" class="form-label">CPF:</label>
                                 <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="11" name="alunoCpf"required>
+                            
+                        </div>
+
+                        <div class="mb-3">
+                                <label for="alunoCpf" class="form-label">Data de Nascimento:</label>
+                                <input type="date" class="form-control"  placeholder="Insira aqui" maxlength="11" name="alunoDt_nasc"required>
                             
                         </div>
 
@@ -66,8 +73,7 @@ if (isset($_SESSION['success'])) {
                         <div class="mb-3">
                                 <label for="alunoCelular" class="form-label">Celular:</label>
                                 <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="11" name="alunoCelular"required>
-                        </div>
-                    
+                        </div>                    
             
                         <div class="mb-3">
                             <label class="form-label" for="IalunoTurno">Turno:</label>

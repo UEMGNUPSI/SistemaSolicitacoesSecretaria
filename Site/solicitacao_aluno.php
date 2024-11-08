@@ -1,6 +1,9 @@
 <?php
 session_start();
+
+require_once("dao/verificacao_login.php");
 require_once("dao/conexao.php");
+
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de curso, por exemplo, é setado sessões e é redirecionado para esta página)
 if (isset($_SESSION['success'])) {
     echo "<script>alert('".$_SESSION['success']."');</script>";
@@ -13,6 +16,7 @@ if (isset($_SESSION['success'])) {
    echo "<script>alert('".$_SESSION['duplicated']."');</script>"; 
    unset($_SESSION['duplicated']);
 }
+ $nomealu = $_SESSION['nome-usuario'];
 ?>
 
 <!DOCTYPE html>
@@ -42,13 +46,46 @@ if (isset($_SESSION['success'])) {
     <div class="right-content">
         <header>
             <button id="botao-menu"><i class="fa-solid fa-bars"></i></button>
-            <h1 id="h1-header">Inserção de Solicitações</h1>      
+            <h1 id="h1-header">Envio de Solicitações</h1>      
         </header>
         
 
         <form id="updateForm" class="container mb-3" action="dao/solicitacao.php" method="POST" enctype="multipart/form-data">   
             <input type="hidden" id="solId" name="solId">
-
+                    <div class="mb-3">
+                        <label for="nome-usuario" class="form-label">Nome do Solicitante:</label>
+                        <input type="text" class="form-control" id="nome-usuario" value="<?php echo $nomealu; ?>" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="solicitacaoCurso" class="form-label">Curso que deseja enviar a solictação (Se a disciplina for eletiva, marque o curso correspondente):</label>
+                            <select class="form-select" name="solicitacaoCurso" id="solicitacaoCurso" aria-label="Default select example" required>
+                                <option value="" style="color: #919191;" >Selecione o curso</option>
+                                    <?php
+                                        $sql = $pdo->prepare("SELECT * FROM curso ORDER BY nome_cur");
+                                        $sql->execute();
+                                        $info = $sql->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($info as $key => $value){
+                                            echo '<option value='.$value['idcur'].'>'.$value['nome_cur'].'</option>';
+                                        }
+                                    ?>
+                            </select>
+                    </div>                        
+                    <div class="mb-3">
+                        <label for="solicitacaoPeriodo" class="form-label">Período do Solicitante:</label>
+                            <select class="form-select" name="solicitacaoPeriodo" id="solicitacaoPeriodo" aria-label="Default select example" required>
+                                <option value="" style="color: #919191;" >Selecione o seu Período</option>
+                                    <option value = "1"> 1º Período </option>
+                                    <option value = "2"> 2º Período </option>
+                                    <option value = "3"> 3º Período </option>
+                                    <option value = "4"> 4º Período </option>
+                                    <option value = "5"> 5º Período </option>
+                                    <option value = "6"> 6º Período </option>
+                                    <option value = "7"> 7º Período </option>
+                                    <option value = "8"> 8º Período </option>
+                                    <option value = "9"> 9º Período </option>
+                                    <option value = "10"> 10º Período </option>
+                            </select>
+                    </div>
                     <div class="mb-3">
                         <label for="solicitacaoTipo" class="form-label">Tipo de Solicitação:</label>
                         <select class="form-select" name="solicitacaoTipo" aria-placeholder="askdjk" id="solicitacaoTipo" aria-label="Default select example" required onchange="changeText()">
@@ -64,61 +101,28 @@ if (isset($_SESSION['success'])) {
                                 <option value = "Troca de Turno"> Troca de Turno </option>
                                 <option value = "Defesa de TCC"> Defesa de TCC </option>
                                 <option value = "Troca de Orientador de TCC"> Troca de Orientador de TCC </option>
-                                <option value = "Cancelamento de Matrícula"> Cancelamento de Matrícula </option>
-                                
-                                <div id = "texto_tipo">
-                                    <p id = "descricao_tipo"></p>
-                                </div>
+                                <option value = "Cancelamento de Matrícula"> Cancelamento de Matrícula </option>    
                         </select>
                     </div>
-                    <p id="textParagraph"></p>
+                    
 
                     <div class="mb-3">
-                        <label for="solicitacaoSolicitacao" class="form-label">Solicitação:</label>
-                        <textarea class="form-control" id="solicitacaoInputAdicionar" placeholder="Insira aqui o que deseja solicitar" maxlength="255" name="solicitacaoSolicitacao" required></textarea>
+                        <label for="solicitacaoSolicitacao" class="form-label">Solicitação :</label><b><p id="textParagraph"></p></b>
+                        <textarea class="form-control" id="solicitacaoSolicitacao" placeholder="Insira aqui o que deseja solicitar" maxlength="255" name="solicitacaoSolicitacao" required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="solicitacaoJustificativa" class="form-label">Justificativa:</label>
-                        <textarea class="form-control" id="solicitacaoInputAdicionar"  maxlength="255" name="solicitacaoJustificativa" required></textarea>
+                        <textarea class="form-control" id="solicitacaoJustificativa" placeholder="Informe a justificativa" maxlength="255" name="solicitacaoJustificativa" required></textarea>
                     </div>
                     
                     <div class="mb-3">
                         <label for="solicitacaoArquivo" class="form-label">Arquivos de Comprovantes:</label>
                         <input type="file" class="form-control" id="solicitacaoArquivo" name="solicitacaoArquivo[]" multiple="multiple" required>
                         <p style="font-size: 0.92rem;"><b>Apenas arquivos do tipo pdf, png e jpeg são permitidos *</b></p>
-                    </div>
-                        <div class="mb-3">
-                        <label for="solicitacaoCurso" class="form-label">Curso:</label>
-                            <select class="form-select" name="solicitacaoCurso" id="solicitacaoCurso" aria-label="Default select example" required>
-                                <option value="" style="color: #919191;" >Selecione o curso</option>
-                                    <?php
-                                        $sql = $pdo->prepare("SELECT * FROM curso");
-                                        $sql->execute();
-                                        $info = $sql->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($info as $key => $value){
-                                            echo '<option value='.$value['idcur'].'>'.$value['nome_cur'].'</option>';
-                                        }
-                                    ?>
-                            </select>
-                    </div>
+                    
 
-                    <div class="mb-3">
-                        <label for="solicitacaoPeriodo" class="form-label">Período:</label>
-                            <select class="form-select" name="solicitacaoPeriodo" id="solicitacaoPeriodo" aria-label="Default select example" required>
-                                <option value="" style="color: #919191;" >Selecione o seu Período</option>
-                                    <option value = "1"> 1º Período </option>
-                                    <option value = "2"> 2º Período </option>
-                                    <option value = "3"> 3º Período </option>
-                                    <option value = "4"> 4º Período </option>
-                                    <option value = "5"> 5º Período </option>
-                                    <option value = "6"> 6º Período </option>
-                                    <option value = "7"> 7º Período </option>
-                                    <option value = "8"> 8º Período </option>
-                                    <option value = "9"> 9º Período </option>
-                                    <option value = "10"> 10º Período </option>
-                            </select>
-                    </div>
+                    
         
                     <div class="form-bottom">
                         <button type="submit" name="adicionar-solicitacao" class="btn btn-primary" id="button-adicionar">Adicionar</button>

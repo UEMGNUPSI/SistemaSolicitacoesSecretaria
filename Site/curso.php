@@ -1,8 +1,9 @@
 <?php
 session_start();
 
+require_once("dao/conexao.php");
+require_once("dao/verificacao_login.php");
 require_once("dao/verifica_adm.php");
-
 
 //Verifica se sessões foram setadas antes de entrar nesta página (quando envia a atualização de curso, por exemplo, é setado sessões e é redirecionado para esta página)
 if (isset($_SESSION['success'])) {
@@ -27,14 +28,10 @@ if ($filtro === "") {
     $filtro = null;
 }
 
-
 /* Paginação da tabela: */
-
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $records_per_page = 10; // DEFINE A QUANTIDADE DE REGISTROS POR PÁGINA DE TABELA.
 $offset = ($page - 1) * $records_per_page;
-
-$pdo = new PDO('mysql:host=localhost;dbname=sistema_solicitacoes_uemg', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
 // Obter o total de registros
 $where = isset($filtro) ? "where lower(nome_cur) like '%" . mb_strtolower($filtro) . "%'" : "";
@@ -43,9 +40,7 @@ $total_sql->execute();
 $total_records = $total_sql->fetchColumn();
 $total_pages = ceil($total_records / $records_per_page);
 
-
-
- $sql = $pdo->prepare("SELECT * FROM curso {$where} ORDER BY nome_cur LIMIT :limit OFFSET :offset"); // em ordem alfabética
+$sql = $pdo->prepare("SELECT * FROM curso {$where} ORDER BY nome_cur LIMIT :limit OFFSET :offset"); // em ordem alfabética
 //$sql = $pdo->prepare("SELECT * FROM curso {$where} ORDER BY idcur ASC LIMIT :limit OFFSET :offset"); // em ordem crescente do idcur
 
 
@@ -99,7 +94,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
             
                 <!-- TABELA DOS CURSOS -->
                 <div class="table-wrapper">
-                    <div class="row">
+                    <div class="row table-responsive">
                         <table class="table table-striped " >
                             <thead>
                                 <tr>

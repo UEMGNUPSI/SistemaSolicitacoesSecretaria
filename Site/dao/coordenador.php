@@ -10,7 +10,7 @@ $cpf_crd = trim($_POST['coordenadorCpf']);
 $senha_crd = password_hash($_POST['coordenadorSenha'], PASSWORD_DEFAULT);
 $masp_crd = trim($_POST['coordenadorMasp']);
 $curso = trim($_POST['coordenadorCurso']);
-$celular = trim($_POST['coodenadorCelular']);
+$celular = trim($_POST['coordenadorCelular']);
 
 
 
@@ -49,7 +49,7 @@ if (isset($_POST['adicionar-coordenador'])){
 // Verifica se o formulário de atualizar curso foi enviado
 } else if (isset($_POST["atualizar-coordenador"])){
     $coordenadorId = $_POST['coordenadorId'];
-    $sql = $pdo->prepare("SELECT * FROM coordenador WHERE nome_crd = ?  AND idcrd <> ?");
+    $sql = $pdo->prepare("SELECT idcrd, nome_crd, status_crd FROM coordenador WHERE nome_crd = ?  AND idcrd <> ?");
     $sql->execute(array($coordenador, $coordenadorId));
     $sql->fetchAll(PDO::FETCH_ASSOC);
     $status_crd = $_POST['status'];
@@ -65,11 +65,21 @@ if (isset($_POST['adicionar-coordenador'])){
         exit();
 
     }else{
-        $sql = $pdo->prepare("UPDATE coordenador SET nome_crd = ?, cpf_crd = ?, senha_crd = ?, status_crd = ?, masp_crd = ?, curso_idcur = ?, tp_u_idtpu = ? WHERE idcrd = ?");
-        $sql->execute(array($coordenador, $cpf_crd, $senha_crd, $status_crd, $masp_crd, $curso, $tipo, $coordenadorId));
+        $sql = $pdo->prepare("UPDATE coordenador SET nome_crd = ?, cpf_crd = ?, senha_crd = ?, status_crd = ?, masp_crd = ?, curso_idcur = ?, tp_u_idtpu = ?, telefone_crd = ? WHERE idcrd = ?");
+        $sql->execute(array($coordenador, $cpf_crd, $senha_crd, $status_crd, $masp_crd, $curso, $tipo,  $celular, $coordenadorId));
         $_SESSION['success'] = 'Coordenador atualizado com sucesso!';
         header("Location: ../gerenciamento_coordenador.php");
         exit();
     }
+}  else if (isset($_POST["redefinirSenha"])){
+    $coordenadorId = $_POST['coordenadorId'];
+    $cpf = trim($_POST['coordenadorCpf']);
+    $senha_hash = password_hash($cpf, PASSWORD_DEFAULT);
+    $sql = $pdo->prepare("UPDATE coordenador SET senha_crd = :senha_hash WHERE idcrd = :coordenadorId");
+    $sql->execute(array(':senha_hash' => $senha_hash, ':coordenadorId' => $coordenadorId));
+    $_SESSION['success'] = 'Senha atualizada com sucesso!';
+    header("Location: ../gerenciamento_coordenador.php");
+    exit();
+
 }
 ?>

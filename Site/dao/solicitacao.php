@@ -63,8 +63,14 @@ if (isset($_POST['adicionar-solicitacao'])) {
         $nomesArquivosString = '';
     }
 
-    $sql = $pdo->prepare("INSERT INTO solicitacao VALUES (null,?,?,?,?,1,?,?,?,?)");
-    $sql->execute(array($sol_curso,$periodo,$solicitacao,$justificativa,$nomesArquivosString,$sol_tipo,$cursoUsuario,$idUsuario));
+    // Set the time zone to Brasilia
+    date_default_timezone_set('America/Sao_Paulo');
+
+    // Get the current date and time
+    $data_solicitacao = date('Y-m-d H:i:s');
+
+    $sql = $pdo->prepare("INSERT INTO solicitacao VALUES (null,?,?,?,?,'em aberto',?,?,?,?,?)");
+    $sql->execute(array($sol_curso,$periodo,$solicitacao,$justificativa,$nomesArquivosString,$sol_tipo,$data_solicitacao,$cursoUsuario,$idUsuario));
     $_SESSION['success'] = 'Solicitação Enviada!';
     header("Location: ../solicitacao_aluno.php");
     exit();

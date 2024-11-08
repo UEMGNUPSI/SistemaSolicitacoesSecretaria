@@ -50,10 +50,12 @@ if (isset($_POST['acao'])){
         $sql->execute(array($cpf, $senha));
         
         $info = $sql->fetchAll(PDO::FETCH_ASSOC); 
+        $idUsuario = $info[0]['idadm'];
         $nome = $info[0]['nome_adm'];
          
         if ($sql->rowCount() > 0) {
             $_SESSION['usuario'] = $cpf;
+            $_SESSION['id-usuario']   = $idUsuario;
             $_SESSION['nome-usuario'] = $nome;
             $_SESSION['tipo-usuario'] = strtolower($tipo);
             header('Location: ../home.php');

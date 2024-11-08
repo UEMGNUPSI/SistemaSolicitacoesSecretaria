@@ -39,9 +39,12 @@ h1 {
     text-align: center;
     color: white;
     font-weight: bold;
+    font-size: 1.5rem;
 }
 
-
+hr{
+    margin: 0px;
+}
 
 
 main {
@@ -77,6 +80,9 @@ form {
     gap: 4px;
 }
 
+p{
+    margin-bottom: 0px;
+}
 
 #espaco{
     display: flex;
