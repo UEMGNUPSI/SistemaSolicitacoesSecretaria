@@ -109,7 +109,7 @@ $encaminhamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Atualizar Aluno</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Análise</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
