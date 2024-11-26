@@ -81,18 +81,11 @@
             <div class="caixa-bem-vindo">
                 <h2>Bem-vindo, <?php echo $_SESSION['nome-usuario']; ?>!</h2>
             </div>
-            <div class="caixa-links">
-                <h2>Links úteis</h2>
-                <ul>
-                    <li><a href="https://www.uemg.br/" target="_blank">Site da UEMG</a></li>
-                    <li><a href="https://lyceum.uemg.br/" target="_blank">Lyceum</a></li>
-                    <li><a href="https://www.uemg.br/central-de-informacoes/" target="_blank">Central de Informações</a></li>
-                </ul>
-            </div>
-            <div class="caixa-links">
-                <h2>Solicitações Respondidas</h2>
+            <div class="caixa-links mb-3">
+                <a href="visualizar_solicitacao.php" style="font-size: 1.2rem;">Visualizar Solicitações</a>
                 <ul>
                     <?php
+                    /*
 
                         $id_aluno = $_SESSION['id-usuario'];
                         $sql = $pdo->prepare("SELECT tipo_sol FROM solicitacao WHERE aluno_idalu = ? AND status_sol = 'concluido'");
@@ -107,7 +100,16 @@
                                 echo $sol['tipo_sol'];
                             }
                         }
+                     */
                     ?>
+                </ul>
+            </div>
+            <div class="caixa-links">
+                <h2>Links úteis</h2>
+                <ul>
+                    <li><a href="https://www.uemg.br/" target="_blank">Site da UEMG</a></li>
+                    <li><a href="https://lyceum.uemg.br/" target="_blank">Lyceum</a></li>
+                    <li><a href="https://www.uemg.br/central-de-informacoes/" target="_blank">Central de Informações</a></li>
                 </ul>
             </div>
         </div>

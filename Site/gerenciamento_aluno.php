@@ -83,15 +83,20 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col">
 
                         <?php if ($numeroCur == 0): ?>
-                            <b><p>Para adicionar aluno, é necessário inserir, pelo menos, um <a href="curso.php">curso</a></p></b>
+                            <b>
+                                <p>Para adicionar aluno, é necessário inserir, pelo menos, um <a href="curso.php">curso</a>
+                                </p>
+                            </b>
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#modal-adicionar" title="Para adicionar coordenador, é necessário inserir, pelo menos, um curso" disabled>Adicionar Aluno<i
-                                class="fa-solid fa-graduation-cap" style="margin-left: 5px;"></i></button>
+                                data-bs-target="#modal-adicionar"
+                                title="Para adicionar coordenador, é necessário inserir, pelo menos, um curso"
+                                disabled>Adicionar Aluno<i class="fa-solid fa-graduation-cap"
+                                    style="margin-left: 5px;"></i></button>
                         <?php else: ?>
-                        <!-- Botão de adicionar curso -->
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#modal-adicionar" title="Adicionar aluno">Adicionar Aluno<i
-                                class="fa-solid fa-graduation-cap" style="margin-left: 5px;"></i></button>
+                            <!-- Botão de adicionar curso -->
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#modal-adicionar" title="Adicionar aluno">Adicionar Aluno<i
+                                    class="fa-solid fa-graduation-cap" style="margin-left: 5px;"></i></button>
                         <?php endif; ?>
                     </div>
                     <div class="col">

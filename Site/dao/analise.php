@@ -27,8 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        // Atualizar o status da solicitação para "Concluído"
-        $stmt = $pdo->prepare("UPDATE solicitacao SET status_sol = 'Concluído' WHERE idsol = :idsol");
+        $status = ($resultado == "Indeferido") ? "Concluído" : "Analisado";
+        $stmt = $pdo->prepare("UPDATE solicitacao SET status_sol = :status WHERE idsol = :idsol");
+        $stmt->bindParam(':status', $status); 
         $stmt->bindParam(':idsol', $idsol);
         $stmt->execute();
         $_SESSION['success'] = "Análise concluída com sucesso!";
