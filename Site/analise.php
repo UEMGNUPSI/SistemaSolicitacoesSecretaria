@@ -21,7 +21,7 @@ if (isset($_SESSION['success'])) {
 $id_crd = $_SESSION['id-usuario'];
 
 $stmt = $pdo->prepare("
-    SELECT e.*, s.*, a.nome_alu 
+    SELECT e.*, s.*, a.nome_alu, a.ra_alu 
     FROM encaminhamento AS e 
     INNER JOIN solicitacao AS s ON e.solicitacao_idsol = s.idsol 
     INNER JOIN aluno AS a ON s.aluno_idalu = a.idalu  -- Usando 'idalu' da tabela 'solicitacao' para fazer o JOIN
@@ -92,7 +92,7 @@ $encaminhamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     $dataSolicitacao = date('d/m/Y', strtotime($value['data_sol'])); // Ajuste o nome do campo conforme necessário
                                     echo '<div class="d-flex justify-content-between align-items-center" style="margin: 5px;">';
                                     echo '<span>' . htmlspecialchars($value['nome_alu']) . ' - ' . htmlspecialchars($value['tipo_sol']) . ' - ' . $dataSolicitacao . '</span>';
-                                    echo "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#modal-atualizar' title='Atualizar " . $value['idsol'] . "' data-bs-id='" . $value['idsol'] . "' data-bs-curso='" . $value['nome_curso_sol'] . "' data-bs-sol='" . $value['solicitacao'] . "' data-bs-just='" . $value['justificativa_sol'] . "' data-bs-anexo='" . $value['anexo_sol'] . "' data-bs-tipo='" . $value['tipo_sol'] . "' style='background-color: #46697F;width: 30%;'>Analisar</button>";
+                                    echo "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#modal-atualizar' title='Analisar solicitação' data-bs-id='" . $value['idsol'] . "' data-bs-nomeAlu='" . $value['nome_alu'] . "' data-bs-raAlu='" . $value['ra_alu'] . "' data-bs-curso='" . $value['nome_curso_sol'] . "' data-bs-sol='" . $value['solicitacao'] . "' data-bs-just='" . $value['justificativa_sol'] . "' data-bs-anexo='" . $value['anexo_sol'] . "' data-bs-tipo='" . $value['tipo_sol'] . "' style='background-color: #46697F;width: 30%;'>Analisar</button>";
                                     echo '</div><hr>';
                                 }
 
@@ -106,10 +106,10 @@ $encaminhamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="modal fade" id="modal-atualizar" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Análise</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel"></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -208,12 +208,15 @@ $encaminhamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
             atualizarButtonModal.addEventListener('show.bs.modal', function (event) {
                 const button = event.relatedTarget;
                 const solicitacaoId = button.getAttribute('data-bs-id');
+                const solicitante = button.getAttribute('data-bs-nomeAlu');
+                const raAluno = button.getAttribute('data-bs-raAlu');
                 const solicitacaoCurso = button.getAttribute('data-bs-curso');
                 const solicitacaoSolicitacao = button.getAttribute('data-bs-sol');
                 const solicitacaoJustificativa = button.getAttribute('data-bs-just');
                 const solicitacaoAnexo = button.getAttribute('data-bs-anexo');
                 const solicitacaoTipo = button.getAttribute('data-bs-tipo');
 
+                const modalTitle = document.getElementById('staticBackdropLabel');
                 const idsolInput = document.getElementById('idsol');
                 const solicitacaoCursoSelect = document.getElementById('solicitacaoCurso');
                 const solicitacaoSolicitacaoInput = document.getElementById('solicitacaoSolicitacao');
@@ -221,6 +224,7 @@ $encaminhamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 const solicitacaoTipoSelect = document.getElementById('solicitacaoTipo');
                 const arquivosComprovantesDiv = document.getElementById('arquivosComprovantes');
 
+                modalTitle.innerHTML = "<b>Solicitante: " + solicitante + " - RA: " + raAluno + "</b>";
                 idsolInput.value = solicitacaoId;
                 solicitacaoCursoSelect.value = solicitacaoCurso;
                 solicitacaoSolicitacaoInput.value = solicitacaoSolicitacao;

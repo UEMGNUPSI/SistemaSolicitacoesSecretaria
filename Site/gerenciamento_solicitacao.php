@@ -83,6 +83,7 @@ $total_pages = ceil($total_records / $records_per_page);
 $sql = $pdo->prepare("
     SELECT s.*, 
            aluno.nome_alu, 
+           aluno.ra_alu,
            curso.nome_cur,
            a.justificativa_ana AS justificativa_coordenador,
            a.resultado_ana AS resultado_analise
@@ -227,6 +228,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                                     title='Visualizar solicitação " . $value['idsol'] . "' 
                                                     data-bs-id='" . $value['idsol'] . "' 
                                                     data-bs-solicitante='" . $value['nome_alu'] . "'
+                                                    data-bs-raAluno='" . $value['ra_alu'] . "'
                                                     data-bs-datasol='" . $value['data_sol'] . "' 
                                                     data-bs-curso='" . $value['nome_curso_sol'] . "' 
                                                     data-bs-alunoId='" . $value['aluno_idalu'] . "' 
@@ -279,10 +281,10 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="modal fade" id="modal-atualizar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Informações</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -387,6 +389,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 // Extrai os dados do atributo data-* dos botões
                 var idsol = button.getAttribute('data-bs-id');
                 var solicitante = button.getAttribute('data-bs-solicitante');
+                var raAluno = button.getAttribute('data-bs-raAluno');
                 var datasol = button.getAttribute('data-bs-datasol');
                 var alunoId = button.getAttribute('data-bs-alunoId');
                 var tipo = button.getAttribute('data-bs-tipo');
@@ -400,6 +403,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
                 // Atualiza os campos do modal com os dados recebidos
+                var modalTitle = document.getElementById("staticBackdropLabel");
                 var modalBodyInputId = modalAtualizar.querySelector('#idsol');
                 var modalBodyInputsolicitante = modalAtualizar.querySelector('#nomesolicitante');
                 var modalBodyInputdatasol = modalAtualizar.querySelector('#datasol');
@@ -412,7 +416,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 var arquivosComprovantesDiv = document.getElementById('arquivosComprovantes');
 
 
-
+                modalTitle.innerHTML = "<b>Solicitante: " + solicitante + " - RA: " + raAluno + "</b>";
                 modalBodyInputId.value = idsol;
                 modalBodyInputsolicitante.value = solicitante;
                 modalBodyInputdatasol.value = datasol;
@@ -455,12 +459,12 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 }
 
 
-                var btnRealizado = document.getElementById('markAsCompleted');
                 // Seleciona o curso correto no dropdown
                 if (curso) {
                     modalBodyInputCurso.value = curso;
                 }
-
+                
+                var btnRealizado = document.getElementById('markAsCompleted');
                 if (status === 'Analisado') {
                     btnRealizado.style.display = 'block';
                     btnRealizado.onclick = function () {
