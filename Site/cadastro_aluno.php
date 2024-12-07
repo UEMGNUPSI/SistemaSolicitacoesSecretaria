@@ -40,13 +40,12 @@ if (isset($_SESSION['success'])) {
     <form id="updateForm" action="dao/cadastro_aluno.php" method="POST">   
                         <div class="mb-3">
                                 <label for="alunoNome" class="form-label">Nome:</label>
-                                <input type="text" class="form-control" id="alunoInputAdicionar" placeholder="Insira aqui" maxlength="30" name="alunoNome" required>
+                                <input type="text" class="form-control" id="alunoInputAdicionar" placeholder="Insira aqui" maxlength="100" name="alunoNome" required>
                         </div>
 
                         <div class="mb-3">
-                                <label for="alunoCpf" class="form-label">CPF:</label>
-                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="11" name="alunoCpf"required>
-                            
+                            <label for="alunoCpf" class="form-label">CPF:</label>
+                            <input type="text" class="form-control" id="alunoCpf" placeholder="Insira aqui" maxlength="14" name="alunoCpf" required>
                         </div>
 
                         <div class="mb-3">
@@ -57,17 +56,17 @@ if (isset($_SESSION['success'])) {
 
                         <div class="mb-3">
                                 <label for="alunoSenha" class="form-label">Senha:</label>
-                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="30" name="alunoSenha"required>
+                                <input type="password" class="form-control"  placeholder="Insira aqui" maxlength="255" name="alunoSenha"required>
                         </div>
 
                         <div class="mb-3">
-                                <label for="alunoRa" class="form-label">RA:</label>
-                                <input type="text" class="form-control" placeholder="Insira aqui" maxlength="11" name="alunoRa"required>
+                                <label for="alunoRa" class="form-label">RA (apenas números):</label>
+                                <input type="number" class="form-control" placeholder="Insira aqui" maxlength="11" name="alunoRa"required>
                         </div>
                     
                         <div class="mb-3">
                                 <label for="alunoEmail" class="form-label">Email:</label>
-                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="30" name="alunoEmail"required>
+                                <input type="text" class="form-control"  placeholder="Insira aqui" maxlength="150" name="alunoEmail"required>
                         </div>
                         
                         <div class="mb-3">
@@ -107,50 +106,25 @@ if (isset($_SESSION['success'])) {
                 </div>
             </div>              
     </form>
-                                        
-                <script>
-                    document.getElementById('alunoCurso').addEventListener('invalid', function() {
-                    document.getElementById('curso-error').style.display = 'block';
-                });
-                    document.getElementById('alunoCurso').addEventListener('input', function() {
-                    document.getElementById('curso-error').style.display = 'none';
-                });
-                </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="script/fontawesome.js"></script>
+    <script type="text/javascript" src="script/script.js"></script>
+    <script>
+        function formatarCPF(cpf) {
+            // Remove caracteres não numéricos
+            cpf = cpf.replace(/\D/g, '');
+            // Adiciona a formatação
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            return cpf;
+        }
 
-                <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                <script src="script/fontawesome.js"></script>
-                <script type="text/javascript" src="script/script.js"></script>
-                <script>
-        document.addEventListener('DOMContentLoaded', function () {
-                inputId.value = alunoId;
-                document.getElementById('alunoNome').value = alunoNome;
-                document.getElementById('alunoCpf').value = alunoCPF;
-                document.getElementById('alunoRa').value = alunoRA;
-                document.getElementById('alunoEmail').value = alunoEmail;
-                document.getElementById('alunoCelular').value = alunoCelular;
-                document.getElementById('alunoPeriodo').value = alunoPeriodo;
-                document.getElementById('alunoTurno').value = alunoTurno;
-                document.getElementById('alunoStatus').value = alunoStatus;
-                document.getElementById('alunoSenha').value = alunoSenha;
-                document.getElementById('alunoCurso').value = alunoCurso;
-                document.getElementById('alunoTipo').value = alunoTipo;
-
-                inputId.value = alunoId;
-                document.getElementById('alunoNome').value = alunoNome;
-                document.getElementById('alunoCpf').value = alunoCPF;
-                document.getElementById('alunoRa').value = alunoRA;
-                document.getElementById('alunoEmail').value = alunoEmail;
-                document.getElementById('alunoCelular').value = alunoCelular;
-                document.getElementById('alunoPeriodo').value = alunoPeriodo;
-                document.getElementById('alunoTurno').value = alunoTurno;
-                document.getElementById('alunoStatus').value = alunoStatus;
-                document.getElementById('alunoSenha').value = alunoSenha;
-                document.getElementById('alunoCurso').value = alunoCurso;
-                document.getElementById('alunoTipo').value = alunoTipo;
-            });
-
-    </script>
+        document.getElementById('alunoCpf').addEventListener('input', function() {
+            this.value = formatarCPF(this.value);
+        });
+</script>
 </body>
 </html>

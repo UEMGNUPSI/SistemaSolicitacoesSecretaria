@@ -200,12 +200,20 @@ form {
     cursor: pointer;
 }
 
+.table-responsive, .mb-3 .form-control, .mb-3 .form-select{
+    opacity: 90%;
+}
 
 .right-content {
+    background-image: url("../assets/icone_logo.ico");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-color: rgba(255, 255, 255, 0.5);
+    background-blend-mode: overlay;
+    background-attachment: scroll;
     width: 100%;
     right: 0;
     top: 0;
-
 }
 
 .form-input{

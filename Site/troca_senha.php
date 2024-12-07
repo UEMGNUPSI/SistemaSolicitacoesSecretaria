@@ -27,8 +27,8 @@
     
             try {
                 $result_atualizar_senha->execute();
-                $mensagem = "<p>Sua senha foi atualizada com sucesso! Você vai ser redirecionado em 5 segundos!</p>";
-                header('Refresh: 5; URL=index.php');
+                $mensagem = "<p>Senha atualizada com sucesso! Você vai ser redirecionado em 3 segundos! Caso nao for, <a href='../index.php'>clique aqui</p>";
+                header('Refresh: 3; URL=index.php');
             } catch (PDOException $e) {
                 $mensagem = "<p>Erro: Não foi possível atualizar a senha. Erro: " . $e->getMessage() . "</p>";
             }
@@ -57,7 +57,7 @@
     </style>
 </head>
 <body>
-    <div class="right-content">
+    <div>
         <header>
             <button id="botao-menu"><i class="fa-solid fa-bars"></i></button> 
             <h1 id="h1-header">Troca de Senha</h1>

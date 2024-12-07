@@ -81,11 +81,12 @@
 /* Estilos para a aba Avisos */
 
 .avisos {
-    background-color: #f0f0f0; /* cor de fundo da aba */
-    padding: 20px; /* espaçamento interno da aba */
-    border: 1px solid #ddd; /* borda da aba */
-    border-radius: 10px; /* arredondamento da borda */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* sombra da aba */
+    opacity: 90%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .avisos h2 {

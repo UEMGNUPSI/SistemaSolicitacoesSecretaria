@@ -288,7 +288,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="updateForm" target="_blank" method="POST">
+                    <form id="updateForm" method="POST">
                         <input type="hidden" id="idsol" name="idsol">
                         <input type="hidden" id="nomesolicitante" name="solicitante">
                         <input type="hidden" id="datasol" name="datasol">
@@ -372,7 +372,8 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         function marcarconcluido() {
             const form = document.getElementById('updateForm');
-            form.action = "teste.php";
+            form.action = "requerimento.php";
+            form.target = "_blank";
             form.submit();
         }
 

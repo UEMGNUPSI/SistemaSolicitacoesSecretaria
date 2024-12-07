@@ -250,11 +250,11 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                                     <label for="Status:">Status Aluno: </label>
                                     <div>
                                         <div>
-                                            <input type="radio" id="alunoStatus" name="status" checked value="1">
+                                            <input type="radio" id="alunoStatus" name="alunoStatus" checked value="1">
                                             <label for="alunoStatus">Ativo</label>
                                         </div>
                                         <div>
-                                            <input type="radio" id="alunoStatus" name="status" value="0">
+                                            <input type="radio" id="alunoStatus" name="alunoStatus" value="0">
                                             <label for="">Inativo</label>
                                         </div>
                                     </div>
@@ -265,7 +265,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="modal-footer">
                             <button type="submit" name="atualizar-aluno" class="btn btn-primary"
-                                data-bs-dismiss="modal">Salvar</button>
+                               >Salvar</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         </div>
                     </form>
@@ -274,7 +274,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- MODAL ADICIONAR CURSO -->
+    <!-- MODAL ADICIONAR ALUNO -->
     <div class="modal fade" id="modal-adicionar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
@@ -362,7 +362,7 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                         <div class="modal-footer">
                             <button type="submit" name="adicionar-aluno" class="btn btn-primary"
                                 data-bs-dismiss="modal">Adicionar</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-secondary">Fechar</button>
                         </div>
                     </form>
                 </div>
@@ -396,48 +396,21 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
             // FUNÇÃO PARA PEGAR BOTÃO DE ACIONAMENTO DO MODAL COM OS ATRIBUTOS PASSADOS A ELE 
             atualizarButtonModal.addEventListener('show.bs.modal', function (event) {
                 const button = event.relatedTarget;
-
-
                 const alunoId = button.getAttribute('data-id');
-
-
                 const alunoNome = button.getAttribute('data-nome');
-
-
                 const alunoCPF = button.getAttribute('data-cpf');
-
-
                 const alunoRA = button.getAttribute('data-ra');
-
-
                 const alunoEmail = button.getAttribute('data-email');
-
-
                 const alunoCelular = button.getAttribute('data-celular');
-
-
                 const alunoTurno = button.getAttribute('data-turno');
-
-
                 const alunoStatus = button.getAttribute('data-status');
-
-
                 const alunoSenha = button.getAttribute('data-senha');
-
-
                 const alunoCurso = button.getAttribute('data-curso');
-
-
                 const alunoTipo = button.getAttribute('data-tipo');
-
-
                 const alunoDt_nasc = button.getAttribute('data-nasc');
-                console.log("Data de Nascimento: ", alunoDt_nasc); // Adicione esta linha para depuração
-
                 const inputId = document.getElementById('alunoId');
-
-
                 inputId.value = alunoId;
+
                 document.getElementById('alunoNome').value = alunoNome;
                 document.getElementById('alunoCpf').value = alunoCPF;
                 document.getElementById('alunoRa').value = alunoRA;

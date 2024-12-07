@@ -17,8 +17,6 @@ $sql2->execute();
 $infoId = $sql2->fetchAll(PDO::FETCH_ASSOC);
 $tipo = $infoId[0]['idtpu'];
 
-$dataNascFormatada = date('d/m/Y', strtotime($dt_nasc));
-
 if (isset($_POST['adicionar-aluno'])){
     $sql = $pdo->prepare("SELECT * FROM aluno WHERE cpf_alu = ?");
     $sql->execute(array($cpf));
@@ -47,7 +45,7 @@ if (isset($_POST['adicionar-aluno'])){
 } else if (isset($_POST["atualizar-aluno"])){
     $status = trim($_POST['alunoStatus']);
     $alunoId = trim($_POST['alunoId']);
-    $sql = $pdo->prepare("SELECT * FROM aluno WHERE cpf_alu = ?  AND idalu <> ?");
+    $sql = $pdo->prepare("SELECT * FROM aluno WHERE cpf_alu = ?  AND idalu != ?");
     $sql->execute(array($cpf, $alunoId));
     $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -62,7 +60,7 @@ if (isset($_POST['adicionar-aluno'])){
         exit();
 
     }else{
-        $sql = $pdo->prepare("UPDATE aluno SET nome_alu = ?, cpf_alu = ?,dt_nasc_alu = ?, ra_alu = ?, email_alu = ?, celular_alu = ?, turno_alu = ?, status_alu = ?,curso_idcur = ?, tp_u_idtpu = ? WHERE idalu = ?");
+        $sql = $pdo->prepare("UPDATE aluno SET nome_alu = ?, cpf_alu = ?,dt_nasc_alu = ?, ra_alu = ?, email_alu = ?, celular_alu = ?, turno_alu = ?, status_alu = ?, curso_idcur = ?, tp_u_idtpu = ? WHERE idalu = ?");
         $sql->execute(array($nome,$cpf,$dt_nasc,$ra,$email,$celular,$turno,$status,$curso,$tipo,$alunoId));
         $_SESSION['success'] = 'Aluno atualizado com sucesso!';
         header("Location: ../gerenciamento_aluno.php");
