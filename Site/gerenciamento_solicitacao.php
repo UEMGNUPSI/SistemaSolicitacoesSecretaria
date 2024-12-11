@@ -43,20 +43,16 @@ if (isset($_POST['markAsCompleted'])) {
             exit();
         }
     } catch (PDOException $e) {
-        // Lida com erros de banco de dados
         header("Location: gerenciamento_solicitacao.php?error=2");
         exit();
     }
 }
 
 // Limpa o POST (quando usuário pressionar "Filtrar")
-$post_array = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+$post_array = filter_input_array(INPUT_GET);
 
-// Verifica se filtro foi definido
-$curso_id = isset($_GET['curso']) ? trim($_GET['curso']) : "";
-if ($curso_id === "") {
-    $curso_id = null;
-}
+$curso_id = isset($_GET['curso']) ? trim($_GET['curso']) : null;
+$status = isset($_GET['status']) ? trim($_GET['status']) : null;
 
 /* Paginação da tabela: */
 
@@ -64,10 +60,14 @@ $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $records_per_page = 10; // DEFINE A QUANTIDADE DE REGISTROS POR PÁGINA DE TABELA.
 $offset = ($page - 1) * $records_per_page;
 
+
 // Construir a cláusula WHERE
 $where = "WHERE 1=1"; // Inicia com uma condição verdadeira
 if (!empty($curso_id) && $curso_id !== "todas") {
     $where .= " AND s.nome_curso_sol = :curso_id";
+}
+if (!empty($status) && $status !== "todos") {
+    $where .= " AND s.status_sol = :status";
 }
 
 // Obter o total de registros
@@ -75,11 +75,14 @@ $total_sql = $pdo->prepare("SELECT COUNT(*) FROM solicitacao s INNER JOIN aluno 
 if (!empty($curso_id) && $curso_id !== "todas") {
     $total_sql->bindValue(':curso_id', $curso_id);
 }
+if (!empty($status) && $status !== "todos") {
+    $total_sql->bindValue(':status', $status);
+}
 $total_sql->execute();
 $total_records = $total_sql->fetchColumn();
 $total_pages = ceil($total_records / $records_per_page);
 
-// Consulta para obter as solicitações com resposta e justificativa do coordenador
+// Consulta para obter as solicitações com os filtros
 $sql = $pdo->prepare("
     SELECT s.*, 
            aluno.nome_alu, 
@@ -93,12 +96,21 @@ $sql = $pdo->prepare("
     LEFT JOIN encaminhamento e ON s.idsol = e.solicitacao_idsol 
     LEFT JOIN analise a ON e.idenc = a.encaminhamento_idenc 
     {$where} 
-    ORDER BY s.idsol DESC 
+     ORDER BY 
+        CASE 
+            WHEN s.status_sol = 'Em aberto' THEN 1
+            WHEN s.status_sol = 'Analisado' THEN 2
+            WHEN s.status_sol = 'em análise' THEN 3
+            ELSE 4
+        END,
+        s.idsol DESC 
     LIMIT :limit OFFSET :offset
 ");
-
 if (!empty($curso_id) && $curso_id !== "todas") {
     $sql->bindValue(':curso_id', $curso_id);
+}
+if (!empty($status) && $status !== "todos") {
+    $sql->bindValue(':status', $status, PDO::PARAM_STR);
 }
 $sql->bindValue(':limit', $records_per_page, PDO::PARAM_INT);
 $sql->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -159,9 +171,10 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
             <!-- Formulário de Filtro -->
             <form class="form-horizontal" action="gerenciamento_solicitacao.php" method="get">
                 <div class="row">
-                    <div class=" col">
+                    <!-- Filtro por Curso -->
+                    <div class="col">
                         <div class="controls" style="display: flex; align-items: center; gap: 10px;">
-                            <label for="filtrocurso" class="form-label" style="margin-bottom: 0px;">Curso:</label>
+                        <label for="filtrocurso" class="form-label" style="margin-bottom: 0px;">Curso:</label>
                             <select class="form-select" name="curso" id="filtrocurso" required>
                                 <option value="" disabled <?= $curso_id === null ? 'selected' : '' ?>>Selecione o curso
                                 </option>
@@ -178,13 +191,28 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                     </div>
+
+                    <!-- Filtro por Status -->
                     <div class="col">
-                        <button type="submit" class="btn btn-primary" title="Filtrar"
-                            style="background-color: #46697F;"><i class="fa-solid fa-magnifying-glass"
-                                style="color: #FFF; width: 20px; height: 20px;"></i></button>
+                        <div class="controls" style="display: flex; align-items: center; gap: 10px;">
+                            <label for="filtrostatus" class="form-label" style="margin-bottom: 0px;">Status:</label>
+                            <select class="form-select" name="status" id="filtrostatus" required>
+                                <option value="todos" <?= $status === "todos" || empty($status) ? 'selected' : '' ?>>Todos</option>
+                                <option value="Em aberto" <?= $status === "Em aberto" ? 'selected' : '' ?>>Em aberto</option>
+                                <option value="em análise" <?= $status === "em análise" ? 'selected' : '' ?>>Em análise</option>
+                                <option value="Analisado" <?= $status === "Analisado" ? 'selected' : '' ?>>Analisado</option>
+                                <option value="Concluído" <?= $status === "Concluído" ? 'selected' : '' ?>>Concluído</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Botão de Filtrar -->
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary" title="Filtrar" style="background-color: #46697F;">
+                            <i class="fa-solid fa-magnifying-glass" style="color: #FFF; width: 20px; height: 20px;"></i>
+                        </button>
                     </div>
                 </div>
-                <br />
             </form>
 
             <div class="table-wrapper">
@@ -192,17 +220,21 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 15%;">Id Solicitação</th>
-                                <th scope="col" style="width: 20%;">Nome do Solicitante</th>
+                                <th scope="col" style="width: 15%;">ID</th>
+                                <th scope="col" style="width: 20%;">Nome Solicitante</th>
                                 <th scope="col" style="width: 20%;">Solicitação</th>
-                                <th scope="col" style="width: 20%;">Data da Solicitação</th>
-                                <th scope="col" style="width: 50%;">Status da Solicitação</th>
+                                <th scope="col" style="width: 20%;">Data Solicitação</th>
+                                <th scope="col" style="width: 50%;">Status Solicitação</th>
+                                <th scope="col" style="width: 50%;">Visualizar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             if (count($res) == 0) {
-                                echo "<p>Nenhuma solicitação</p>";
+                                echo "
+                                    <tr>
+                                        <td><b>Nenhuma solicitação</b></td>
+                                    </tr>";
                             } else {
                                 foreach ($res as $value) {
 
@@ -259,19 +291,19 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     if ($total_pages > 1) {
                         // Ícone de anterior
                         if ($page > 1) {
-                            echo '<li class="page-item"><a class="page-link" href="?page=' . ($page - 1) . '&curso=' . $curso_id . '" aria-label="Anterior"><span aria-hidden="true">&laquo;</span></a></li>';
+                            echo '<li class="page-item"><a class="page-link" href="?page=' . ($page - 1) . '&curso=' . $curso_id . '&status='. $status .'" aria-label="Anterior"><span aria-hidden="true">&laquo;</span></a></li>';
                         }
 
                         for ($i = 1; $i <= $total_pages; $i++) {
-                            echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '&curso=' . $curso_id . '">' . $i . '</a></li>';
+                            echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '&curso=' . $curso_id . '&status='. $status .'">' . $i . '</a></li>';
                         }
 
                         // Ícone de próximo
                         if ($page < $total_pages) {
-                            echo '<li class="page-item"><a class="page-link" href="?page=' . ($page + 1) . '&curso=' . $curso_id . '" aria-label="Próximo"><span aria-hidden="true">&raquo;</span></a></li>';
+                            echo '<li class="page-item"><a class="page-link" href="?page=' . ($page + 1) . '&curso=' . $curso_id . '&status='. $status .'" aria-label="Próximo"><span aria-hidden="true">&raquo;</span></a></li>';
                         }
                     } else {
-                        echo '<li class="page-item"><a class="page-link" href="?page=1 &curso=' . $curso_id . '">1</a></li>';
+                        echo '<li class="page-item"><a class="page-link" href="?page=1 &curso=' . $curso_id . '&status='. $status .'">1</a></li>';
                     }
                     ?>
                 </ul>
@@ -369,7 +401,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
     <script src="script/fontawesome.js"></script>
     <script type="text/javascript" src="script/script.js"></script>
     <script>
-
         function marcarconcluido() {
             const form = document.getElementById('updateForm');
             form.action = "requerimento.php";
@@ -377,12 +408,10 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
             form.submit();
         }
 
-
         var modalAtualizar = document.getElementById('modal-atualizar');
 
         document.addEventListener('DOMContentLoaded', function () {
             var modalAtualizar = document.getElementById('modal-atualizar');
-
             modalAtualizar.addEventListener('show.bs.modal', function (event) {
                 // Botão que acionou o modal
                 var button = event.relatedTarget;
@@ -401,7 +430,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 var status = button.getAttribute('data-bs-status');
                 var justificativa_coordenador = button.getAttribute('data-bs-justificativa-coordenador');
                 var respostaAnalise = button.getAttribute('data-bs-resposta-coordenador');
-
 
                 // Atualiza os campos do modal com os dados recebidos
                 var modalTitle = document.getElementById("staticBackdropLabel");
@@ -459,7 +487,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                     modalBodyRespostaAnalise.innerHTML = '';
                 }
 
-
                 // Seleciona o curso correto no dropdown
                 if (curso) {
                     modalBodyInputCurso.value = curso;
@@ -475,9 +502,6 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
                 } else {
                     btnRealizado.style.display = 'none';
                 }
-
-
-
             });
         });
 
@@ -508,7 +532,5 @@ $res = $sql->fetchAll(PDO::FETCH_ASSOC);
             }
         });
     </script>
-
 </body>
-
 </html>
